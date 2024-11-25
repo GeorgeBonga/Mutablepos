@@ -1,7 +1,7 @@
 import React from "react";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
-import Header from "../components/Header";
+import BodyText from "../components/Onboarding/BodyText";
 import Button from "../components/Button";
 import Paragraph from "../components/Paragraph";
 import BackButton from "../components/BackButton";
@@ -14,9 +14,9 @@ export default function StartScreen({ navigation }) {
         <BackButton goBack={navigation.goBack} />
         <Logo />
 
-        <Header className="text-lg font-semibold text-gray-600 mb-4">
-          Log in to Mutable Tech POS
-        </Header>
+        <BodyText className="text-lg font-semibold text-gray-600 mb-4">
+          Welcome to Mutable Tech POS
+        </BodyText>
         <Paragraph>
           The easiest way to start with your amazing application.
         </Paragraph>
@@ -27,7 +27,7 @@ export default function StartScreen({ navigation }) {
           Login
         </Button>
         <Button
-          mode="outlined"
+          mode="contained"
           onPress={() => navigation.navigate("RegisterScreen")}
         >
           Sign Up

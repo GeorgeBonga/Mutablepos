@@ -7,7 +7,7 @@ const DashBoardQuickOverviewCard = ({ data }) => (
     <Ionicons name={data.icon} size={30} color={data.iconColor} />
     <View className="flex-column bg-white rounded-lg items-center ml-4">
       <Text className="text-sm text-gray-700">{data.label}</Text>
-      <Text className="text-lg font-semibold text-gray-800">${data.amount.toLocaleString()}</Text>
+      <Text className="text-lg font-semibold text-gray-800">KES {data.amount.toLocaleString()}</Text>
     </View>
   </View>
 );

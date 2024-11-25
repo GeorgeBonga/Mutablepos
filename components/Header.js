@@ -1,17 +1,21 @@
-import React from 'react'
-import { StyleSheet } from 'react-native'
-import { Text } from 'react-native-paper'
-import { theme } from '../core/theme'
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Ionicons } from 'react-native-vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Header(props) {
-  return <Text style={styles.header} {...props} />
-}
+function Header  ({ dateOptions,title, selectedDate, setSelectedDate, open, setOpen }) { 
+  const navigation = useNavigation();
+  return(
+  <View className="flex-row items-center px-4 py-4  ">
+    <TouchableOpacity onPress={()=>navigation.goBack()} >
+      <Ionicons name="arrow-back" size={24} color="black" />
+    </TouchableOpacity>
+    <Text className="flex-row justify-center items-center ml-10 text-xl font-bold">{title}</Text>
+    
+  </View>
+  )
+};
 
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 21,
-    color: theme.colors.primary,
-    fontWeight: 'bold',
-    paddingVertical: 12,
-  },
-})
+
+
+export default Header

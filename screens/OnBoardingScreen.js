@@ -1,115 +1,170 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Swiper from 'react-native-swiper';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import Paragraph from '../components/Paragraph';
+import React from 'react';
+import { FlatList, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 
-export default function OnBoardingScreen({ navigation }) {
-  const swiperRef = useRef(null); // Swiper reference
-  const [index, setIndex] = useState(0); // Track the current index
+import { Button } from '../components/Onboarding/Button'
+import { Pagination } from '../components/Onboarding/Pagination';
+import { theme } from '../core/theme';
+import { data } from '../data/Data';
 
-  const handleSkip = () => {
-    navigation.navigate('StartScreen'); // Navigate to Register screen
-  };
+const RenderItem = ({ item, index, x }) => {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
 
-  const handleNext = () => {
-   
-      swiperRef.current.scrollBy(1);
- 
-  };
-  const handleGetStarted =()=>{
-    navigation.navigate('StartScreen');
+  const imageAnimatedStyle = useAnimatedStyle(() => {
+    const opacityAnimation = interpolate(
+      x.value,
+      [
+        (index - 1) * SCREEN_WIDTH,
+        index * SCREEN_WIDTH,
+        (index + 1) * SCREEN_WIDTH,
+      ],
+      [0, 1, 0],
+      Extrapolate.CLAMP
+    );
 
-  }
+    const translateYAnimation = interpolate(
+      x.value,
+      [
+        (index - 1) * SCREEN_WIDTH,
+        index * SCREEN_WIDTH,
+        (index + 1) * SCREEN_WIDTH,
+      ],
+      [100, 0, 100],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      width: SCREEN_WIDTH * 0.8,
+      height: SCREEN_WIDTH * 0.8,
+      opacity: opacityAnimation,
+      transform: [{ translateY: translateYAnimation }],
+    };
+  });
+
+  const textAnimatedStyle = useAnimatedStyle(() => {
+    const opacityAnimation = interpolate(
+      x.value,
+      [
+        (index - 1) * SCREEN_WIDTH,
+        index * SCREEN_WIDTH,
+        (index + 1) * SCREEN_WIDTH,
+      ],
+      [0, 1, 0],
+      Extrapolate.CLAMP
+    );
+
+    const translateYAnimation = interpolate(
+      x.value,
+      [
+        (index - 1) * SCREEN_WIDTH,
+        index * SCREEN_WIDTH,
+        (index + 1) * SCREEN_WIDTH,
+      ],
+      [100, 0, 100],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      opacity: opacityAnimation,
+      transform: [{ translateY: translateYAnimation }],
+    };
+  });
 
   return (
-    <Background>
-      <Swiper
-        ref={swiperRef} // Attach the swiper reference
-        style={styles.wrapper}
-        loop={false}
-        dot={<View style={styles.dot} />}
-        activeDot={<View style={styles.activeDot} />}
-        paginationStyle={styles.pagination} // Ensures dots stay at the bottom without affecting slides
-        scrollEnabled // Enables smooth, swipe-only transitions without stacking
-      
-       
-      >
-        {/* Slide 1 */}
-        <View style={styles.slide}>
-          <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-            <Text style={styles.skipText}>Skip</Text>
-          </TouchableOpacity>
-          <Logo />
-          <Header className="text-lg font-semibold text-gray-600 mb-4">Welcome to MutableTech POS</Header>
-          <Paragraph>The easiest way to manage your sales and track products.</Paragraph>
-          <Button style={styles.nextButton} mode="contained" onPress={handleNext}>Next</Button>
-        </View>
+    <View style={[styles.itemContainer, { width: SCREEN_WIDTH }]}>
+      <Animated.Image source={item.image} style={imageAnimatedStyle} />
 
-        {/* Slide 2 */}
-        <View style={styles.slide}>
-          <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-            <Text style={styles.skipText}>Skip</Text>
-          </TouchableOpacity>
-          <Logo />
-          <Header className="text-lg font-semibold text-gray-600 mb-4">Manage Products</Header>
-          <Paragraph>Organize, track, and manage your inventory with ease.</Paragraph>
-          <Button style={styles.nextButton} mode="contained" onPress={handleNext}>Next</Button>
-        </View>
+      <Animated.View style={textAnimatedStyle}>
+        <Text style={styles.itemTitle}>{item.title}</Text>
+        <Text style={styles.itemText}>{item.text}</Text>
+      </Animated.View>
+    </View>
+  );
+};
 
-        {/* Slide 3 */}
-        <View style={styles.slide}>
-          <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-            <Text style={styles.skipText}>Skip</Text>
-          </TouchableOpacity>
-          <Logo />
-          <Header className="text-lg font-semibold text-gray-600 mb-4">Get Started</Header>
-          <Paragraph>Let's get you set up and ready to go in minutes.</Paragraph>
-          <Button style={styles.nextButton} mode="contained" onPress={handleGetStarted}>Get Started</Button>
-        </View>
-      </Swiper>
-    </Background>
+export default function OnBoardingScreen() {
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const flatListRef = useAnimatedRef();
+
+  const flatListIndex = useSharedValue(0);
+  const x = useSharedValue(0);
+
+  const onViewableItemsChanged = ({ viewableItems }) => {
+    flatListIndex.value = viewableItems[0].index ?? 0;
+  };
+
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      x.value = event.contentOffset.x;
+    },
+  });
+
+  return (
+    <View style={styles.container}>
+      <Animated.FlatList
+        ref={flatListRef}
+        data={data}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item, index }) => (
+          <RenderItem index={index} item={item} x={x} />
+        )}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        bounces={false}
+        pagingEnabled
+        onViewableItemsChanged={onViewableItemsChanged}
+      />
+
+      <View style={styles.footerContainer}>
+        <Pagination data={data} screenWidth={SCREEN_WIDTH} x={x} />
+
+        <Button
+          flatListRef={flatListRef}
+          flatListIndex={flatListIndex}
+          dataLength={data.length}
+        />
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {},
-  slide: {
+  container: {
     flex: 1,
+    backgroundColor: theme.colors.surface,
+  },
+  itemContainer: {
+    flex: 1,
+    backgroundColor: theme.colors.surface,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
+    justifyContent: 'space-around',
   },
-  skipButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
+  itemTitle: {
+    color: theme.colors.textColor,
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  skipText: {
-    fontSize: 16,
-    color: '#1d4ed8',
+  itemText: {
+    color: theme.colors.textColor,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginHorizontal: 30,
   },
-  dot: {
-    backgroundColor: 'rgba(0,0,0,.2)',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 3,
-  },
-  activeDot: {
-    backgroundColor: '#1d4ed8',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 3,
-    
-  },
-  nextButton: {
-    marginTop: 20,
+  footerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: 20,
   },
 });
-
-

@@ -1,100 +1,115 @@
-import React, { useState } from "react";
-import { View, Text, Switch, TouchableOpacity, Image } from "react-native";
-import { Ionicons } from "react-native-vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import UserData from "../utils/UserData";
-import Button from "../components/Button";
+import React from "react";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-const Settings = ({ item }) => {
-  const navigation = useNavigation();
-  const [notifications, setNotifications] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-  const randomUser = UserData[Math.floor(Math.random() * UserData.length)];
+import Antdesign from "react-native-vector-icons/AntDesign";
+import HomeHeader from "../components/HomeHeader";
+import { useNavigation } from "@react-navigation/native";
+import {Switch,useTheme} from "react-native-paper"
+export default function Settings() {
+  const [isPrintingEnabled, setIsPrintingEnabled] = React.useState(false);
 
-  // Dummy user data including an image URL
+  
+  const navigation = useNavigation();
+  const paperTheme = useTheme();
+
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100 p-5">
-      {/* User Profile Section */}
-      <View className="flex-row items-center mb-6">
-        <Image
-          source={randomUser.image}
-          className="w-16 h-16 rounded-full mr-4"
-        />
-        <View>
-          <Text className="text-xl font-semibold text-gray-800">
-            {randomUser.name}
-          </Text>
-          <Text className="text-sm text-gray-500">{randomUser.email}</Text>
-        </View>
+    <SafeAreaView className="flex-1 bg-white">
+      {/* Header */}
+      <View className="p-4 mt-4  border-gray-200">
+      <HomeHeader />
+       
       </View>
 
-      {/* Settings Title Section */}
-      <View className="mb-6">
-        <Text className="text-3xl font-bold text-gray-800">Settings</Text>
-      </View>
+      {/* Menu Items */}
+      <View className="mt-4">
+    
 
-      {/* General Settings */}
-      <View className="bg-white p-4 rounded-lg shadow-md mb-6">
-        <Text className="text-lg font-semibold text-gray-800 mb-4">
-          General
-        </Text>
+        {/* Printing Option */}
+        {/* <View className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
+                <Text className="text-white ">🌙</Text> 
+            </View>
+            <Text className="ml-4 text-base text-gray-800">Dark Mode</Text>
+          </View>
+          <Switch value={paperTheme.dark}/>
+        </View> */}
 
-        {/* Notifications Toggle */}
-        <View className="flex-row justify-between items-center mb-4">
-          <Text className="text-gray-700">Notifications</Text>
-          <Switch
-            value={notifications}
-            onValueChange={() => setNotifications(!notifications)}
-            trackColor={{ false: "#ccc", true: "#34D399" }}
-            thumbColor={notifications ? "#10B981" : "#f4f3f4"}
-          />
-        </View>
-      </View>
-
-      {/* Account Settings */}
-      <View className="bg-white p-4 rounded-lg shadow-md mb-6">
-        <Text className="text-lg font-semibold text-gray-800 mb-4">
-          Account
-        </Text>
-
-        {/* Profile Section */}
-        <TouchableOpacity className="flex-row justify-between items-center mb-4">
-          <Text className="text-gray-700">Profile</Text>
-          <Ionicons name="chevron-forward" size={20} color="gray" />
+        {/* Subscription */}
+        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
+              <Text className="text-orange-500">🎁</Text>
+            </View>
+            <Text className="ml-4 text-base text-gray-800">Subscription</Text>
+          </View>
         </TouchableOpacity>
 
-        {/* Change Password Section */}
-        <TouchableOpacity className="flex-row justify-between items-center mb-4">
-          <Text className="text-gray-700">Change Password</Text>
-          <Ionicons name="chevron-forward" size={20} color="gray" />
+        {/* Dashboard */}
+        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-purple-100 rounded-full justify-center items-center">
+              <Text className="text-purple-500">📊</Text>
+            </View>
+            <Text className="ml-4 text-base text-gray-800">Dashboard</Text>
+          </View>
         </TouchableOpacity>
 
-        {/* Logout Button */}
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate("LoginScreen")}
-        >
-          Logout
-        </Button>
+        {/* User Role */}
+        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-blue-100 rounded-full justify-center items-center">
+              <Text className="text-blue-500">👥</Text>
+            </View>
+            <Text className="ml-4 text-base text-gray-800">User Role</Text>
+          </View>
+        </TouchableOpacity>
+
+        {/* Currency */}
+        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-green-100 rounded-full justify-center items-center">
+              <Text className="text-green-500">$</Text>
+            </View>
+            <Text className="ml-4 text-base text-gray-800">Currency</Text>
+          </View>
+          <Text className="text-gray-500 text-lg">KES</Text>
+        </TouchableOpacity>
+
+        {/* Barcode Generator */}
+        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
+              <Text className="text-orange-500">🏷️</Text>
+            </View>
+            <Text className="ml-4 text-base text-gray-800">Barcode Generator</Text>
+          </View>
+        </TouchableOpacity>
+
+        {/* Select Your Language */}
+        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-purple-100 rounded-full justify-center items-center">
+              <Text className="text-purple-500">🌐</Text>
+            </View>
+            <Text className="ml-4 text-base text-gray-800">Select Your Language</Text>
+          </View>
+        </TouchableOpacity>
+
+        {/* Log Out */}
+        <TouchableOpacity onPress={()=>navigation.navigate("LoginScreen")} className="flex-row items-center justify-between px-4 py-3">
+          <View className="flex-row items-center">
+            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
+              <Antdesign name="logout"/>
+            </View>
+            <Text className="ml-4 text-base text-gray-800">Log Out</Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
-      {/* App Settings */}
-      <View className="bg-white p-4 rounded-lg shadow-md">
-        <Text className="text-lg font-semibold text-gray-800 mb-4">Extra</Text>
-
-        {/* Privacy Policy Section */}
-        <TouchableOpacity className="flex-row justify-between items-center mb-4">
-          <Text className="text-gray-700">Privacy Policy</Text>
-          <Ionicons name="chevron-forward" size={20} color="gray" />
-        </TouchableOpacity>
-        <TouchableOpacity className="flex-row justify-between items-center mb-4">
-          <Text className="text-gray-700">Download Data</Text>
-          <Ionicons name="chevron-forward" size={20} color="gray" />
-        </TouchableOpacity>
-      </View>
+      {/* Footer */}
+      <Text className="text-center text-gray-500 text-sm my-4">MutableTechPos V-1.0</Text>
     </SafeAreaView>
   );
-};
-
-export default Settings;
+}

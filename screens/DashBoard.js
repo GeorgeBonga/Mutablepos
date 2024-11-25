@@ -1,30 +1,29 @@
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
-import DashboardHeader from "../components/DashboardHeader";
 import DashboardSummaryCard from "../components/DashboardSummaryCard";
 import DashBoardQuickOverviewCard from "../components/DashBoardQuickOverviewCard";
 import DashBoardLossProfitCard from "../components/DashBoardLossProfitCard";
 import DashBoardData from "../utils/DashBoardData";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import Header from "../components/Header";
 const Dashboard = () => {
   const randomUser =
     DashBoardData[Math.floor(Math.random() * DashBoardData.length)];
   return (
-    <SafeAreaView className="flex-1">
-      
+    <SafeAreaView className="flex-1 mt-4 bg-white">
      
-       
+      
         {/* Header Section */}
-        <DashboardHeader title="Dashboard" />
+        <Header title="Dashboard"/>
+        <ScrollView className="flex-1 bg-gray-100 ">
 
         {/* Sales & Purchase Overview */}
         {/* <DashboardSummaryCard data={randomUser.salesOverview} /> */}
       <DashboardSummaryCard/>
-        <ScrollView className="flex-1 bg-gray-100">
+       
 
         {/* Quick Overview */}
-        <View className="px-4 py-4">
+        <View className="px-4 py-4 ">
           <View className="flex-row flex-wrap justify-between">
             {randomUser.totalOverview.map((item) => (
               <DashBoardQuickOverviewCard key={item.id} data={item} />

@@ -4,8 +4,8 @@ import { Image } from 'react-native';
 export default function Logo() {
   return (
     <Image
-      source={require('../assets/logo.png')}
-      className="w-28 h-28 mb-2 md:w-32 md:h-32 lg:w-40 lg:h-40"
+      source={require('../assets/mlogo.png')}
+      className="w-64 h-64 mb-2 md:w-48 md:h-48 lg:w-56 lg:h-56"
       resizeMode="contain"
     />
   );

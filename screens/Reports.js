@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ReportsCard from '../components/ReportsCard';
 import Header from '../components/Header';
-import DashboardHeader from '../components/DashboardHeader';
 import { SafeAreaView } from 'react-native-safe-area-context';
 const Reports = () => {
   const navigation = useNavigation();
@@ -13,9 +12,9 @@ const Reports = () => {
       id: "2",
       name: "Purchase",
       icon: "wallet-outline",
-      color: "bg-green-100",
+      color: "bg-gray-100",
     },
-    { id: "3", name: "Parties", icon: "people-outline", color: "bg-red-100" },
+    { id: "3", name: "Parties", icon: "people-outline", color: "bg-gray-100" },
     { id: "4", name: "Products", icon: "cube-outline", color: "bg-pink-100" },
     {
       id: "5",
@@ -55,7 +54,7 @@ const Reports = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 bg-gray-50 p-4">
-        <DashboardHeader title="Reports"/>
+        <Header title="Reports"/>
     
       <ReportsCard features={features} />
     </View>

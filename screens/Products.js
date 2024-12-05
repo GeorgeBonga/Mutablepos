@@ -1,19 +1,18 @@
 import React from "react";
-import { View, Text } from "react-native";
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import { View, Text, StyleSheet } from "react-native";
+import { FontAwesome } from "@expo/vector-icons"; // Using @expo/vector-icons
 import ProductHeader from "../components/ProductHeader";
 import { ProductSummaryBox } from "../components/ProductSummaryBox";
 import { ProductList } from "../components/ProductList";
 
 const productData = [
-  { id: "1", name: "Scans", available: 267, sold: 149, color: "bg-white" },
-  { id: "2", name: "Prints", available: 124, sold: 87, color: "bg-white" },
+  { id: "1", name: "Scans", available: 267, sold: 149 },
+  { id: "2", name: "Prints", available: 124, sold: 87 },
   {
     id: "3",
     name: "Folder",
     available: 88,
     sold: 27,
-    color: "bg-red-100",
     lowStock: true,
   },
   {
@@ -21,49 +20,64 @@ const productData = [
     name: "Online Transactions",
     available: 450,
     sold: 234,
-    color: "bg-white",
   },
-  {
-    id: "5",
-    name: "Available",
-    available: 88,
-    sold: 27,
-    color: "bg-green-100",
-  },
-  { id: "6", name: "Scans", available: 267, sold: 149, color: "bg-white" },
-  { id: "7", name: "Prints", available: 124, sold: 87, color: "bg-white" },
-  { id: "8", name: "Scans", available: 267, sold: 149, color: "bg-white" },
-  { id: "9", name: "Prints", available: 124, sold: 87, color: "bg-white" },
+  { id: "5", name: "Available", available: 88, sold: 27 },
+  { id: "6", name: "Scans", available: 267, sold: 149 },
+  { id: "7", name: "Prints", available: 124, sold: 87 },
+  { id: "8", name: "Scans", available: 267, sold: 149 },
+  { id: "9", name: "Prints", available: 124, sold: 87 },
 ];
 
 const Products = () => {
   return (
-    <View className="flex-1 p-6 bg-white">
+    <View style={styles.container}>
       <ProductHeader />
-      <View className="flex-row justify-between mb-6">
+      <View style={styles.summaryContainer}>
         <ProductSummaryBox
           title="Total Products"
           value="12008"
           percentage="+8.00%"
-          color="bg-green-100"
+          color="#D1FAE5" // Light green background
         />
         <ProductSummaryBox
           title="In-hand Products"
           value="2,350"
           percentage="+2.34%"
-          color="bg-blue-100"
+          color="#BFDBFE" // Light blue background
         />
       </View>
-      <View className="flex-row  items-center justify-between m-4">
-        <Text className="text-xl font-semibold mb-4 text-gray-800">
-          Product Overview
-        </Text>
-        <FontAwesome6 name="sliders" size={28} color="black" />
+      <View style={styles.overviewHeader}>
+        <Text style={styles.overviewText}>Product Overview</Text>
+        <FontAwesome name="sliders" size={28} color="black" />
       </View>
-
       <ProductList products={productData} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24, // Equivalent to `p-6`
+    backgroundColor: "#FFFFFF", // White background
+  },
+  summaryContainer: {
+    flexDirection: "row", // Equivalent to `flex-row`
+    justifyContent: "space-between",
+    marginBottom: 24, // Equivalent to `mb-6`
+  },
+  overviewHeader: {
+    flexDirection: "row", // Equivalent to `flex-row`
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: 16, // Equivalent to `m-4`
+  },
+  overviewText: {
+    fontSize: 18, // Equivalent to `text-xl`
+    fontWeight: "600", // Equivalent to `font-semibold`
+    color: "#1F2937", // Equivalent to `text-gray-800`
+    marginBottom: 16, // Equivalent to `mb-4`
+  },
+});
 
 export default Products;

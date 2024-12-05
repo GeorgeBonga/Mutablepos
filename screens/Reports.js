@@ -1,11 +1,26 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, TouchableOpacity,StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ReportsCard from '../components/ReportsCard';
 import Header from '../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ThemeContext } from '../theme/ThemeContext';
 const Reports = () => {
   const navigation = useNavigation();
+  const theme = useContext(ThemeContext)
+
+
+  const styles = StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background, 
+    },
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background, 
+      padding: 16, 
+    },
+  });
   const features = [
     { id: "1", name: "Sales", icon: "cart-outline", color: "bg-blue-100" },
     {
@@ -52,14 +67,15 @@ const Reports = () => {
   ];
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-1 bg-gray-50 p-4">
-        <Header title="Reports"/>
-    
-      <ReportsCard features={features} />
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+       <Header title="Reports" />
+      <View style={styles.container}>
+       
+        <ReportsCard features={features} />
+      </View>
     </SafeAreaView>
   );
 };
+
 
 export default Reports;

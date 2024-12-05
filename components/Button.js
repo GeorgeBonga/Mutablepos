@@ -1,32 +1,59 @@
-import React from 'react'
-import { StyleSheet } from 'react-native'
-import { Button as PaperButton } from 'react-native-paper'
-import { theme } from '../core/theme'
+import React, { useContext } from 'react';
+import { StyleSheet, View, Image, Text } from 'react-native';
+import { Button as PaperButton } from 'react-native-paper';
+import { ThemeContext } from '../theme/ThemeContext';
 
-export default function Button({ mode, style, ...props }) {
-  return (
-    <PaperButton
-      style={[
-        styles.button,
-        mode === 'contained' && { backgroundColor: theme.colors.primary },
-        style,
-      ]}
-      labelStyle={styles.text}
-      mode={mode}
-      {...props}
-    />
-  )
-}
+export default function Button({ mode, style, image, imageStyle, label, ...props }) {
+  const theme = useContext(ThemeContext)
 
+
+  
 const styles = StyleSheet.create({
   button: {
     width: '100%',
     marginVertical: 10,
     paddingVertical: 2,
   },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 20,
+    height: 20,
+    marginRight: 8,
+  },
   text: {
     fontWeight: 'bold',
     fontSize: 15,
     lineHeight: 26,
+    color: theme.colors.color,
   },
-})
+  textContained: {
+    color: "#FFFFFF", 
+  },
+});
+
+  return (
+    <PaperButton
+      style={[
+        styles.button,
+        mode === 'contained' &&
+         { backgroundColor: theme.colors.primary },
+        style,
+      ]}
+      mode={mode}
+      {...props}
+      contentStyle={styles.content} 
+    >
+      <View style={styles.container}>
+        {image && <Image source={image} style={[styles.image, imageStyle]} />}
+        <Text style={[styles.text, mode === 'contained' && styles.textContained]}>{label}</Text>
+      </View>
+    </PaperButton>
+  );
+}

@@ -1,115 +1,216 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState, useContext } from "react";
+import {
+  View,
+  Text,
+  Switch,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Antdesign from "react-native-vector-icons/AntDesign";
+import { EventRegister } from "react-native-event-listeners";
 import HomeHeader from "../components/HomeHeader";
 import { useNavigation } from "@react-navigation/native";
-import {Switch,useTheme} from "react-native-paper"
+import { ThemeContext } from "../theme/ThemeContext";
+
 export default function Settings() {
-  const [isPrintingEnabled, setIsPrintingEnabled] = React.useState(false);
-
-  
   const navigation = useNavigation();
-  const paperTheme = useTheme();
 
+  const theme = useContext(ThemeContext);
+  const [darkmode, setDarkmode] = useState(false);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    header: {
+      borderBottomWidth: 1,
+      borderColor: theme.colors.background,
+    },
+    menuItems: {
+      marginTop: 16,
+    },
+    menuItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+    },
+    borderBottom: {
+      borderBottomWidth: 1,
+      borderColor: "#E5E7EB",
+    },
+    menuItemContent: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    iconWrapper: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    darkModeIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    darkModeIconText: {
+      color: theme.colors.color,
+    },
+    subscriptionIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    subscriptionIconText: {
+      color: theme.colors.color,
+    },
+    dashboardIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    dashboardIconText: {
+      color: theme.colors.color,
+    },
+    userRoleIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    userRoleIconText: {
+      color: theme.colors.color,
+    },
+    currencyIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    currencyIconText: {
+      color: theme.colors.color,
+    },
+    barcodeIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    barcodeIconText: {
+      color: theme.colors.color,
+    },
+    languageIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    languageIconText: {
+      color: theme.colors.color,
+    },
+    logoutIcon: {
+      backgroundColor: theme.colors.minorcolor,
+    },
+    menuItemText: {
+      marginLeft: 16,
+      fontSize: 16,
+      color: theme.colors.color,
+    },
+    menuItemSubText: {
+      fontSize: 16,
+      color: theme.colors.color,
+    },
+    footerText: {
+      textAlign: "center",
+      color: theme.colors.color,
+      fontSize: 12,
+      marginVertical: 16,
+    },
+  });
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      {/* Header */}
-      <View className="p-4 mt-4  border-gray-200">
-      <HomeHeader />
-       
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <HomeHeader />
       </View>
-
-      {/* Menu Items */}
-      <View className="mt-4">
-    
-
-        {/* Printing Option */}
-        {/* <View className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
-                <Text className="text-white ">🌙</Text> 
+      <View style={styles.menuItems}>
+        <View style={[styles.menuItem, styles.borderBottom]}>
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.darkModeIcon]}>
+              <Text style={styles.darkModeIconText}>🌙</Text>
             </View>
-            <Text className="ml-4 text-base text-gray-800">Dark Mode</Text>
+            <Text style={styles.menuItemText}>Dark Mode</Text>
           </View>
-          <Switch value={paperTheme.dark}/>
-        </View> */}
-
-        {/* Subscription */}
-        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
-              <Text className="text-orange-500">🎁</Text>
-            </View>
-            <Text className="ml-4 text-base text-gray-800">Subscription</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 10,
+            }}
+          >
+  
+            <Switch
+              trackColor={{ false: "#B0BEC5", true: "#3e3e3e" }} 
+              thumbColor={darkmode ? "#4B77B6" : "#E0E0E0"} 
+              ios_backgroundColor="#3e3e3e" 
+              onValueChange={(value) => {
+                setDarkmode(value);
+                EventRegister.emit("changetheme", value); 
+              }}
+              value={darkmode}
+            />
           </View>
-        </TouchableOpacity>
-
-        {/* Dashboard */}
-        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-purple-100 rounded-full justify-center items-center">
-              <Text className="text-purple-500">📊</Text>
+        </View>
+        <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.subscriptionIcon]}>
+              <Text style={styles.subscriptionIconText}>🎁</Text>
             </View>
-            <Text className="ml-4 text-base text-gray-800">Dashboard</Text>
-          </View>
-        </TouchableOpacity>
-
-        {/* User Role */}
-        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-blue-100 rounded-full justify-center items-center">
-              <Text className="text-blue-500">👥</Text>
-            </View>
-            <Text className="ml-4 text-base text-gray-800">User Role</Text>
+            <Text style={styles.menuItemText}>Subscription</Text>
           </View>
         </TouchableOpacity>
-
-        {/* Currency */}
-        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-green-100 rounded-full justify-center items-center">
-              <Text className="text-green-500">$</Text>
+        <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.dashboardIcon]}>
+              <Text style={styles.dashboardIconText}>📊</Text>
             </View>
-            <Text className="ml-4 text-base text-gray-800">Currency</Text>
-          </View>
-          <Text className="text-gray-500 text-lg">KES</Text>
-        </TouchableOpacity>
-
-        {/* Barcode Generator */}
-        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
-              <Text className="text-orange-500">🏷️</Text>
-            </View>
-            <Text className="ml-4 text-base text-gray-800">Barcode Generator</Text>
+            <Text style={styles.menuItemText}>Dashboard</Text>
           </View>
         </TouchableOpacity>
-
-        {/* Select Your Language */}
-        <TouchableOpacity className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-purple-100 rounded-full justify-center items-center">
-              <Text className="text-purple-500">🌐</Text>
+        <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.userRoleIcon]}>
+              <Text style={styles.userRoleIconText}>👥</Text>
             </View>
-            <Text className="ml-4 text-base text-gray-800">Select Your Language</Text>
+            <Text style={styles.menuItemText}>User Role</Text>
           </View>
         </TouchableOpacity>
-
-        {/* Log Out */}
-        <TouchableOpacity onPress={()=>navigation.navigate("LoginScreen")} className="flex-row items-center justify-between px-4 py-3">
-          <View className="flex-row items-center">
-            <View className="w-8 h-8 bg-orange-100 rounded-full justify-center items-center">
-              <Antdesign name="logout"/>
+        <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.currencyIcon]}>
+              <Text style={styles.currencyIconText}>$</Text>
             </View>
-            <Text className="ml-4 text-base text-gray-800">Log Out</Text>
+            <Text style={styles.menuItemText}>Currency</Text>
+          </View>
+          <Text style={styles.menuItemSubText}>KES</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.barcodeIcon]}>
+              <Text style={styles.barcodeIconText}>🏷️</Text>
+            </View>
+            <Text style={styles.menuItemText}>Barcode Generator</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.languageIcon]}>
+              <Text style={styles.languageIconText}>🌐</Text>
+            </View>
+            <Text style={styles.menuItemText}>Select Your Language</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("LoginScreen")}
+          style={styles.menuItem}
+        >
+          <View style={styles.menuItemContent}>
+            <View style={[styles.iconWrapper, styles.logoutIcon]}>
+              <Antdesign name="logout" color={theme.colors.color} size={16} />
+            </View>
+            <Text style={styles.menuItemText}>Log Out</Text>
           </View>
         </TouchableOpacity>
       </View>
-
-      {/* Footer */}
-      <Text className="text-center text-gray-500 text-sm my-4">MutableTechPos V-1.0</Text>
+      <Text style={styles.footerText}>MutableTechPos V-1.0</Text>
     </SafeAreaView>
   );
 }

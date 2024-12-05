@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, Dimensions, TouchableWithoutFeedback } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, Dimensions, TouchableWithoutFeedback, StyleSheet } from "react-native";
 import { CartesianChart, BarGroup } from "victory-native";
-
+import { ThemeContext } from "../theme/ThemeContext";
 const { width } = Dimensions.get("window");
 
 const DATA = [
@@ -17,73 +17,102 @@ const DATA = [
 const labels = DATA.map((item) => item.x);
 
 const DashboardSummaryCard = () => {
-  const [selectedDay, setSelectedDay] = useState(DATA[0]); // Default to Monday
+  const [selectedDay, setSelectedDay] = useState(DATA[0]); 
+  const theme = useContext(ThemeContext)
 
   const handleBarPress = (index) => {
     const selectedItem = DATA[index];
     setSelectedDay(selectedItem);
   };
 
+  
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor:theme.colors.minorcolor,
+    padding: 16,
+    borderRadius: 8,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    margin: 8,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: theme.colors.color,
+    marginBottom: 8,
+  },
+  day: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: theme.colors.color,
+  },
+  legendContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  legendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 16,
+  },
+  legendIcon: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 4,
+  },
+  legendText: {
+    color: theme.colors.color,
+  },
+  chartContainer: {
+    height: 200,
+    position: "relative",
+  },
+  touchableOverlay: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    flexDirection: "row",
+  },
+  touchableBar: {
+    flex: 1,
+  },
+  axisLabels: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  axisLabelText: {
+    textAlign: "center",
+    color: theme.colors.color,
+    width: `${100 / labels.length}%`, // Dynamically adjust width
+    fontSize: 12,
+  },
+});
+
+
   return (
-    <View
-      style={{
-        backgroundColor: "white",
-        padding: 16,
-        borderRadius: 8,
-        shadowColor: "#000",
-        shadowOpacity: 0.1,
-        margin: 8,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 18,
-          fontWeight: "bold",
-          color: "#1F2937",
-          marginBottom: 8,
-        }}
-      >
-        Weekly Overview
-      </Text>
-      <Text style={{ fontSize: 16, fontWeight: "bold", color: "#1F2937" }}>
-        {selectedDay.x}
-      </Text>
+    <View style={styles.card}>
+      <Text style={styles.title}>Weekly Overview</Text>
+      <Text style={styles.day}>{selectedDay.x}</Text>
+      
       {/* Legend with Embedded Data */}
-      <View
-        style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginRight: 16,
-          }}
-        >
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              backgroundColor: "#34D399",
-              borderRadius: 5,
-              marginRight: 4,
-            }}
-          />
-          <Text style={{ color: "#1F2937" }}>Sales: KES {selectedDay.y}</Text>
+      <View style={styles.legendContainer}>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendIcon, { backgroundColor: "#34D399" }]} />
+          <Text style={styles.legendText}>Sales: KES {selectedDay.y}</Text>
         </View>
 
-        <View
-          style={{
-            width: 10,
-            height: 10,
-            backgroundColor: "#EF4444",
-            borderRadius: 5,
-            marginRight: 4,
-          }}
-        />
-        <Text style={{ color: "#1F2937" }}>Purchase: KES {selectedDay.z}</Text>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendIcon, { backgroundColor: "#EF4444" }]} />
+          <Text style={styles.legendText}>Purchase: KES {selectedDay.z}</Text>
+        </View>
       </View>
 
-      <View style={{ height: 200 }}>
+      <View style={styles.chartContainer}>
         {/* Bar Chart */}
         <CartesianChart
           data={DATA}
@@ -96,11 +125,7 @@ const DashboardSummaryCard = () => {
               chartBounds={chartBounds}
               betweenGroupPadding={0.4}
               withinGroupPadding={0.1}
-             
-              roundedCorners={{
-                topLeft: 10,
-                topRight: 10,
-              }}
+              roundedCorners={{ topLeft: 10, topRight: 10 }}
             >
               <BarGroup.Bar points={points.y} color="#34D399" />
               <BarGroup.Bar points={points.z} color="#EF4444" />
@@ -109,45 +134,19 @@ const DashboardSummaryCard = () => {
         </CartesianChart>
 
         {/* Overlay with Touchable for Bar Click */}
-        <View
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            flexDirection: "row",
-          }}
-        >
+        <View style={styles.touchableOverlay}>
           {DATA.map((item, index) => (
-            <TouchableWithoutFeedback
-              key={index}
-              onPress={() => handleBarPress(index)}
-            >
-              <View style={{ flex: 1 }} />
+            <TouchableWithoutFeedback key={index} onPress={() => handleBarPress(index)}>
+              <View style={styles.touchableBar} />
             </TouchableWithoutFeedback>
           ))}
         </View>
       </View>
 
       {/* X-axis Labels */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-         
-        }}
-      >
+      <View style={styles.axisLabels}>
         {labels.map((label, index) => (
-          <Text
-            key={index}
-            style={{
-              textAlign: "center",
-              color: "#4B5563",
-              width: `${100 / labels.length}%`, // Make the width evenly distributed
-              fontSize: 12, // Adjust font size as needed
-            }}
-          >
+          <Text key={index} style={styles.axisLabelText}>
             {label.substring(0, 3)} {/* Display only the first 3 letters */}
           </Text>
         ))}

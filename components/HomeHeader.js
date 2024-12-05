@@ -1,22 +1,56 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { Ionicons } from 'react-native-vector-icons';
+import React, { useContext } from 'react';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import UserData from '../utils/UserData';
+import { ThemeContext } from '../theme/ThemeContext';
 
 const HomeHeader = () => {
-    const randomUser = UserData[Math.floor(Math.random() * UserData.length)];
-  return (
-    <View className="flex-row items-center justify-between mb-4">
-    <View className="flex-row items-center">
-      <Image
-        source={randomUser.image} // Placeholder image URL
-        className="w-12 h-12 rounded-full mr-3"
-      />
-      <Text className="text-lg font-semibold text-gray-800">{randomUser.name}</Text>
-    </View>
-    <Ionicons name="notifications-outline" size={24} color="black" />
-  </View>
-  )
-}
+  const theme = useContext(ThemeContext);
+  const randomUser = UserData[Math.floor(Math.random() * UserData.length)];
+  const screenWidth = Dimensions.get('window').width;
 
-export default HomeHeader
+  const styles = StyleSheet.create({
+    headerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: 6,
+      backgroundColor: theme.colors.secondary,
+    },
+    userContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: theme.colors.secondary,
+    },
+    userImage: {
+      width: screenWidth * 0.12, 
+      height: screenWidth * 0.12, 
+      borderRadius: (screenWidth * 0.12) / 2, // Make it circular
+      marginRight: 12,
+      marginLeft: 8,
+      resizeMode: 'cover', 
+    },
+    userName: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: theme.colors.color,
+    },
+  });
+
+  return (
+    <View style={styles.headerContainer}>
+      <View style={styles.userContainer}>
+        <Image source={randomUser.image} style={styles.userImage} />
+        <Text style={styles.userName}>{randomUser.name}</Text>
+      </View>
+      <Ionicons
+        style={{ marginRight: 36 }}
+        name="notifications-outline"
+        size={24}
+        color={theme.colors.color}
+      />
+    </View>
+  );
+};
+
+export default HomeHeader;

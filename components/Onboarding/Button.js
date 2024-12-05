@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FlatList, Pressable, StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -7,19 +7,46 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
-import { theme } from '../../core/theme';
+import { ThemeContext } from '../../theme/ThemeContext';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 
 export function Button({ dataLength, flatListIndex, flatListRef })
+
 {
   const  navigation = useNavigation()
+  const theme = useContext(ThemeContext)
+
+
+  
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: theme.colors.primary,
+    padding: 10,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  arrow: {
+    position: 'absolute',
+   
+  },
+  text: {
+    position: 'absolute',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: "#FFFFFF",
+  },
+});
+
   const buttonAnimationStyle = useAnimatedStyle(() => {
     const isLastScreen = flatListIndex.value === dataLength - 1;
     return {
       width: isLastScreen ? withSpring(140) : withSpring(60),
       height: 60,
+      
     };
   });
 
@@ -42,7 +69,7 @@ export function Button({ dataLength, flatListIndex, flatListRef })
       ],
     };
   });
-
+ 
   const handleNextScreen = () => {
     
     const isLastScreen = flatListIndex.value === dataLength - 1;
@@ -69,29 +96,9 @@ export function Button({ dataLength, flatListIndex, flatListRef })
         <Feather
           name="arrow-right"
           size={30}
-          color={theme.colors.textHighlightColor}
+          color="#FFFFFF"
         />
       </Animated.View>
     </AnimatedPressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: theme.colors.backgroundHighlightColor,
-    padding: 10,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  arrow: {
-    position: 'absolute',
-  },
-  text: {
-    position: 'absolute',
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: theme.colors.textHighlightColor,
-  },
-});

@@ -1,14 +1,41 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { Ionicons } from 'react-native-vector-icons';
+import React, { useContext } from 'react';
+import { View, Text,StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { ThemeContext } from '../theme/ThemeContext';
 
-const DashBoardLossProfitCard = ({ data }) => (
-  <View className="bg-white p-4 rounded-lg shadow-md m-2 flex-1 items-center">
+const DashBoardLossProfitCard = ({ data }) =>{ 
+  const theme =useContext(ThemeContext)
+
+  const styles = StyleSheet.create({
+    card: {
+      backgroundColor: theme.colors.minorcolor,
+      padding: 16,
+      borderRadius: 8,
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      margin: 8,
+      flex: 1,
+      alignItems: 'center',
+    },
+    label: {
+      fontSize: 14,
+      color: theme.colors.color,
+    },
+    amount: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: theme.colors.color,
+    },
+  });
+  
+  
+  return(
+  <View style={styles.card}>
     <Ionicons name={data.icon} size={30} color={data.iconColor} />
-    <Text className="text-sm text-gray-700">{data.label}</Text>
-    <Text className="text-lg font-semibold text-gray-800">KES {data.amount.toLocaleString()}</Text>
+    <Text style={styles.label}>{data.label}</Text>
+    <Text style={styles.amount}>KES {data.amount.toLocaleString()}</Text>
   </View>
-);
+)};
 
 
 export default DashBoardLossProfitCard;

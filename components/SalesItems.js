@@ -1,35 +1,94 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 const SalesItems = ({ product }) => {
   const currentDate = new Date().toLocaleDateString();
 
   return (
-    <View className={`flex-row items-center p-4 rounded-lg ${product.color}`}>
-      {/* Product Image */}
+    <View style={[styles.container, { backgroundColor: product.color }]}>
       <Image
-        source={{ uri: product.imageUrl }} // Use the imageUrl from the product data
-        style={{ width: 56, height: 56, borderRadius: 8, marginRight: 12 }}
+        source={{ uri: product.imageUrl }}
+        style={styles.image}
         resizeMode="cover"
       />
 
-      <View className="flex-1">
-        <View className="flex-row justify-between items-center">
-          <Text className="text-lg font-bold text-gray-700">{product.name}</Text>
-          <Text className="text-lg font-bold text-gray-700">${product.price}</Text>
+      <View style={styles.textContainer}>
+        <View style={styles.header}>
+          <Text style={styles.productName}>{product.name}</Text>
+          <Text style={styles.productPrice}>${product.price}</Text>
         </View>
-        <View className="flex-row">
-          <Text className="text-sm text-green-500 mr-4">{product.available}</Text>
-          <Text className="text-sm text-red-500">{product.sold}</Text>
+        <View style={styles.availability}>
+          <Text style={styles.available}>{product.available}</Text>
+          <Text style={styles.sold}>{product.sold}</Text>
         </View>
-        <Text className="text-xs text-gray-500 mt-1">Date: {currentDate}</Text>
+        <Text style={styles.dateText}>Date: {currentDate}</Text>
       </View>
 
       {product.lowStock && (
-        <Text className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full mr-2">Low Stock</Text>
+        <Text style={styles.lowStockText}>Low Stock</Text>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 8,
+  },
+  image: {
+    width: 56,
+    height: 56,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  textContainer: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  productName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4B5563',
+  },
+  productPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4B5563',
+  },
+  availability: {
+    flexDirection: 'row',
+  },
+  available: {
+    fontSize: 14,
+    color: '#10B981',
+    marginRight: 16,
+  },
+  sold: {
+    fontSize: 14,
+    color: '#F87171',
+  },
+  dateText: {
+    fontSize: 12,
+    color: '#6B7280',
+    marginTop: 4,
+  },
+  lowStockText: {
+    backgroundColor: '#FEE2E2',
+    color: '#EF4444',
+    fontSize: 12,
+    fontWeight: '600',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 9999,
+    marginRight: 8,
+  },
+});
 
 export default SalesItems;

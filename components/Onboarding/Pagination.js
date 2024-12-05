@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-
-import { theme } from '../../core/theme';
+import { ThemeContext } from '../../theme/ThemeContext';
 
 const PaginationComp = ({ index, x, screenWidth }) => {
+  const theme = useContext(ThemeContext)
+
+
   const animatedDotStyle = useAnimatedStyle(() => {
     const widthAnimation = interpolate(
       x.value,
@@ -32,13 +34,14 @@ const PaginationComp = ({ index, x, screenWidth }) => {
       Extrapolate.CLAMP
     );
 
+    
     return {
       width: widthAnimation,
       opacity: opacityAnimation,
     };
   });
 
-  return <Animated.View style={[styles.dots, animatedDotStyle]} />;
+  return <Animated.View style={[styles.dots, animatedDotStyle,{  backgroundColor: theme.colors.primary,}]} />;
 };
 
 export function Pagination({ data, screenWidth, x }) {
@@ -56,6 +59,7 @@ export function Pagination({ data, screenWidth, x }) {
   );
 }
 
+  
 const styles = StyleSheet.create({
   container: {
     height: 40,
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: theme.colors.backgroundHighlightColor,
+  
     marginHorizontal: 10,
   },
 });

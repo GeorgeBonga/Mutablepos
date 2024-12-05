@@ -1,22 +1,39 @@
 import React from 'react';
-import { FlatList, View, Text } from 'react-native';
-import  ProductItem  from './ProductItem';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
+import ProductItem from './ProductItem';
 
 export const ProductList = ({ products }) => {
   return (
-    <View className="flex-1 mb-10 ">
-      {/* Check if products are available */}
+    <View style={styles.container}>
       {products.length > 0 ? (
         <FlatList
           data={products}
           renderItem={({ item }) => <ProductItem product={item} />}
-          keyExtractor={(item) => item.id.toString()} // Ensure ID is a string
+          keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }} // Add bottom padding
+          contentContainerStyle={styles.flatListContent}
         />
       ) : (
-        <Text className="text-center text-lg text-gray-500 mt-5">No products available</Text>
+        <Text style={styles.noProductsText}>No products available</Text>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginBottom: 40,
+  },
+  flatListContent: {
+    paddingBottom: 20,
+  },
+  noProductsText: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#6b7280',
+    marginTop: 20,
+  },
+});
+
+export default ProductList;

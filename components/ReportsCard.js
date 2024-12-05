@@ -1,44 +1,70 @@
-import React from "react";
-import { View, Text, Alert, TouchableWithoutFeedback } from "react-native";
-import { Ionicons } from "react-native-vector-icons";
+import React, { useContext } from "react";
+import { View, Text, Alert, TouchableWithoutFeedback,StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "../theme/ThemeContext";
 const ReportsCard = ({ features }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const theme = useContext(ThemeContext)
+
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      backgroundColor:theme.colors.backgound
+    },
+    card: {
+      width: 96,
+      height: 96,
+      borderRadius: 8,
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: 24,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.5,
+    
+    },
+    featureName: {
+      marginTop: 8,
+      fontSize: 12,
+      fontWeight: "500",
+      color: theme.colors.color,
+    },
+  });
+  
+
   return (
-    <View className="flex-wrap flex-row justify-between">
+    <View style={styles.container}>
       {features.map((feature) => {
         const scale = useSharedValue(1);
 
-        // Animation styles
         const animatedStyle = useAnimatedStyle(() => ({
           transform: [{ scale: scale.value }],
         }));
 
         const handlePressIn = () => {
-          scale.value = 0.95; // Shrink slightly when pressed
+          scale.value = 0.95;
         };
 
         const handlePressOut = () => {
-          scale.value = withSpring(1); // Return to normal size with a bounce
+          scale.value = withSpring(1);
         };
 
         const handlePress = () => {
-          // Generate a random number between 0 and 2
           const randomChoice = Math.floor(Math.random() * 3);
-        
+
           if (randomChoice === 0) {
-            // Navigate to SalesReport
             navigation.navigate("SalesReport");
           } else if (randomChoice === 1) {
-            // Navigate to ExpenseReport
             navigation.navigate("ExpenseReport");
           } else {
-            // Show an alert
             Alert.alert(feature.name, "Component is coming soon");
           }
         };
@@ -51,13 +77,10 @@ const ReportsCard = ({ features }) => {
             onPressOut={handlePressOut}
           >
             <Animated.View
-              style={[{ marginBottom: 24 }, animatedStyle]}
-              className={`${feature.color} w-24 h-24 rounded-lg items-center justify-center shadow-md`}
+              style={[styles.card, { backgroundColor: theme.colors.minorcolor}, animatedStyle]}
             >
-              <Ionicons name={feature.icon} size={30} color="black" />
-              <Text className="mt-2 text-sm font-medium text-gray-700">
-                {feature.name}
-              </Text>
+              <Ionicons name={feature.icon} size={30} color={theme.colors.color} />
+              <Text style={styles.featureName}>{feature.name}</Text>
             </Animated.View>
           </TouchableWithoutFeedback>
         );
@@ -65,5 +88,6 @@ const ReportsCard = ({ features }) => {
     </View>
   );
 };
+
 
 export default ReportsCard;

@@ -3,9 +3,14 @@
     "name": "Mutablepos",
     "slug": "Mutablepos",
     "version": "1.0.0",
+    "androidStatusBar": {
+      "backgroundColor": "#2A6DBB",
+      "barStyle": "light-content"
+    },
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
+    
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",

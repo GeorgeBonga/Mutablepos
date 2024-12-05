@@ -1,4 +1,4 @@
-import UserImage from "../assets/logo.png"
+import UserImage from "../assets/nik.png"
 const UserData = [
     {
       id: 1,

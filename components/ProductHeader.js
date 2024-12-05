@@ -1,26 +1,47 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const ProductHeader = () => {
-  const navigation =useNavigation();
+  const navigation = useNavigation();
   return (
-    <View className="flex-row justify-between items-center mb-6">
-      <Text className="text-3xl font-bold text-gray-800">Products</Text>
-      <View className="flex-row items-center justify-between  p-4">
-        <View className="mr-4">
-          <TouchableOpacity onPress={()=>navigation.navigate("ScanProducts")}>
-          <Ionicons name="scan" size={28} color="black" />
+    <View style={styles.container}>
+      <Text style={styles.title}>Products</Text>
+      <View style={styles.iconContainer}>
+        <View style={styles.iconWrapper}>
+          <TouchableOpacity onPress={() => navigation.navigate("ScanProducts")}>
+            <Ionicons name="scan" size={28} color="black" />
           </TouchableOpacity>
-          
         </View>
-        <View className="ml-4">
+        <View style={styles.iconWrapper}>
           <Ionicons name="search-outline" size={28} color="black" />
         </View>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#4B5563",
+  },
+  iconContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 8,
+  },
+  iconWrapper: {
+    marginHorizontal: 12,
+  },
+});
 
 export default ProductHeader;

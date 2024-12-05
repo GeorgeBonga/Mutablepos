@@ -1,23 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput as Input } from 'react-native-paper';
-import { theme } from '../core/theme';
+import { ThemeContext } from '../theme/ThemeContext';
 
 export default function TextInput({ errorText, description, secureTextEntry, ...props }) {
-  const [secureText, setSecureText] = useState(secureTextEntry); // Default based on prop
+  const theme = useContext(ThemeContext); // Access the theme context
+  const [secureText, setSecureText] = useState(secureTextEntry); // Toggle for password visibility
+
+  const styles = StyleSheet.create({
+    container: {
+
+      width: '100%',
+      marginVertical: 12,
+    },
+    input: {
+      backgroundColor: theme.colors.background, // Background color from theme
+    },
+    description: {
+      fontSize: 13,
+      color: theme.colors.color, // Description text color from theme
+      paddingTop: 8,
+    },
+    error: {
+      fontSize: 13,
+      color: theme.colors.error, // Error text color from theme
+      paddingTop: 8,
+    },
+  });
 
   return (
     <View style={styles.container}>
       <Input
         style={styles.input}
-        selectionColor={theme.colors.primary}
-        underlineColor="transparent"
+        placeholderTextColor={theme.colors.color} // Placeholder text color
+        selectionColor={theme.colors.primary} // Highlight color for selected text
+        underlineColor="transparent" // Removes the underline
         mode="outlined"
-        secureTextEntry={secureText} // Dynamically controls text visibility
+        secureTextEntry={secureText} // Toggles text visibility
+        outlineColor={theme.colors.color} // Default outline color
+        activeOutlineColor={theme.colors.color} // Focused outline color
+        theme={{
+          colors: {
+            text: theme.colors.color, // Ensure input text color matches theme
+            placeholder: theme.colors.color, // Placeholder color
+            primary: theme.colors.primary, // Active outline and caret color
+            background: theme.colors.background, // Background color
+          },
+        }}
         right={
           secureTextEntry && (
             <Input.Icon
-              icon={secureText ? 'eye-off' : 'eye'} // Toggle icons
+              icon={secureText ? 'eye-off' : 'eye'}
+              color={theme.colors.color} // Icon color
               onPress={() => setSecureText(!secureText)} // Toggle visibility
             />
           )
@@ -31,23 +65,3 @@ export default function TextInput({ errorText, description, secureTextEntry, ...
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    marginVertical: 12,
-  },
-  input: {
-    backgroundColor: theme.colors.surface,
-  },
-  description: {
-    fontSize: 13,
-    color: theme.colors.secondary,
-    paddingTop: 8,
-  },
-  error: {
-    fontSize: 13,
-    color: theme.colors.error,
-    paddingTop: 8,
-  },
-});

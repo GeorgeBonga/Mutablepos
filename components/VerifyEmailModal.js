@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import ReactNativeModal from "react-native-modal";
-import { theme } from "../core/theme";
+import { theme } from "../theme/theme";
 import { Input } from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
-    backgroundColor: theme.colors.primary,
+    // backgroundColor: theme.colors.primary,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   errorText: {
-    color: theme.colors.error,
+    // color: theme.colors.error,
     fontSize: 12,
     marginTop: 10,
   },
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   verifyingText: {
     marginTop: 10,
     fontSize: 16,
-    color: theme.colors.primary,
+    // color: theme.colors.primary,
   },
   successContainer: {
     justifyContent: "center",
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   continueButton: {
-    backgroundColor: theme.colors.primary,
+    // backgroundColor: theme.colors.primary,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

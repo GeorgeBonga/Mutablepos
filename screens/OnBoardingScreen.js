@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FlatList, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import Animated, {
   Extrapolate,
@@ -11,11 +11,13 @@ import Animated, {
 
 import { Button } from '../components/Onboarding/Button'
 import { Pagination } from '../components/Onboarding/Pagination';
-import { theme } from '../core/theme';
+import { ThemeContext } from '../theme/ThemeContext';
 import { data } from '../data/Data';
 
 const RenderItem = ({ item, index, x }) => {
   const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const theme = useContext(ThemeContext)
+ 
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     const opacityAnimation = interpolate(
@@ -78,18 +80,22 @@ const RenderItem = ({ item, index, x }) => {
   });
 
   return (
-    <View style={[styles.itemContainer, { width: SCREEN_WIDTH }]}>
+    <View style={[styles.itemContainer, {backgroundColor: theme.colors.background, width: SCREEN_WIDTH }]}>
       <Animated.Image source={item.image} style={imageAnimatedStyle} />
 
       <Animated.View style={textAnimatedStyle}>
-        <Text style={styles.itemTitle}>{item.title}</Text>
-        <Text style={styles.itemText}>{item.text}</Text>
+        <Text style={[styles.itemTitle,{  color: theme.colors.color,}]}>{item.title}</Text>
+        <Text style={[styles.itemText,{  color: theme.colors.color,}]}>{item.text}</Text>
       </Animated.View>
     </View>
   );
 };
 
 export default function OnBoardingScreen() {
+  const theme = useContext(ThemeContext)
+
+ 
+  
   const { width: SCREEN_WIDTH } = useWindowDimensions();
   const flatListRef = useAnimatedRef();
 
@@ -107,7 +113,7 @@ export default function OnBoardingScreen() {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor: theme.colors.background,}]}>
       <Animated.FlatList
         ref={flatListRef}
         data={data}
@@ -137,26 +143,28 @@ export default function OnBoardingScreen() {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.surface,
+    
   },
   itemContainer: {
     flex: 1,
-    backgroundColor: theme.colors.surface,
+    
     alignItems: 'center',
     justifyContent: 'space-around',
   },
   itemTitle: {
-    color: theme.colors.textColor,
+  
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
   },
   itemText: {
-    color: theme.colors.textColor,
+  
     textAlign: 'center',
     lineHeight: 20,
     marginHorizontal: 30,

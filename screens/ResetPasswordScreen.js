@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Background from '../components/Background'
 import BackButton from '../components/BackButton'
 import Logo from '../components/Logo'
@@ -6,9 +6,11 @@ import BodyText from '../components/Onboarding/BodyText'
 import TextInput from '../components/TextInput'
 import Button from '../components/Button'
 import { emailValidator } from '../helpers/emailValidator'
-
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ThemeContext } from '../theme/ThemeContext'
 export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
+  const theme = useContext(ThemeContext)
 
   const sendResetPasswordEmail = () => {
     const emailError = emailValidator(email.value)
@@ -20,6 +22,10 @@ export default function ResetPasswordScreen({ navigation }) {
   }
 
   return (
+    <SafeAreaView
+
+    style={{flex:1, backgroundColor: theme.colors.background }}
+  >
     <Background>
       <BackButton goBack={navigation.goBack} />
       <Logo />
@@ -40,10 +46,12 @@ export default function ResetPasswordScreen({ navigation }) {
       <Button
         mode="contained"
         onPress={sendResetPasswordEmail}
+        label=" Send Instructions"
         style={{ marginTop: 16 }}
-      >
-        Send Instructions
-      </Button>
+      />
+       
+ 
     </Background>
+    </SafeAreaView>
   )
 }

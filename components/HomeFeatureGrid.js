@@ -1,48 +1,92 @@
-import React from "react";
-import { View, Text, Alert, TouchableWithoutFeedback } from "react-native";
-import { Feather, Ionicons } from "react-native-vector-icons";
+import React, { useContext } from "react";
+import { View, Text, Alert, TouchableWithoutFeedback, StyleSheet } from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 const HomeFeatureGrid = ({ features }) => {
+  const theme = useContext(ThemeContext)
   const navigation = useNavigation();
+
+  const styles = StyleSheet.create({
+    grid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      backgroundColor:theme.colors.background,
+
+    
+    },
+    card: {
+      width: "48%",
+      padding: 16,
+      marginBottom: 16,
+      borderRadius: 16,
+      
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.5,
+     
+    },
+    iconWrapper: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    rightSection: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      marginLeft: "auto",
+    },
+    countText: {
+      fontSize: 16,
+      fontWeight: "600",
+      color:theme.colors.color
+    },
+    featureName: {
+      marginTop: 12,
+      fontSize: 14,
+      fontWeight: "500",
+      color:theme.colors.color
+    },
+  });
+  
   return (
-    <View className="flex-wrap flex-row justify-between ">
+    <View style={styles.grid}>
       {features.map((feature) => {
         const scale = useSharedValue(1);
 
-        // Animation styles
         const animatedStyle = useAnimatedStyle(() => ({
           transform: [{ scale: scale.value }],
         }));
 
         const handlePressIn = () => {
-          scale.value = 0.95; 
+          scale.value = 0.95;
         };
 
         const handlePressOut = () => {
-          scale.value = withSpring(1); 
+          scale.value = withSpring(1);
         };
 
         const handlePress = () => {
-          // Generate a random number between 0 and 2
           const randomChoice = Math.floor(Math.random() * 3);
-        
           if (randomChoice === 0) {
-            // Navigate to SalesReport
             navigation.navigate("SalesReport");
           } else if (randomChoice === 1) {
-            // Navigate to ExpenseReport
             navigation.navigate("ExpenseReport");
           } else {
-            // Show an alert
             Alert.alert(feature.name, "Component is coming soon");
           }
         };
+
+    
+
         return (
           <TouchableWithoutFeedback
             key={feature.id}
@@ -51,21 +95,16 @@ const HomeFeatureGrid = ({ features }) => {
             onPressOut={handlePressOut}
           >
             <Animated.View
-              style={[animatedStyle]}
-              className={`${feature.color} w-[48%] p-4 mb-4  rounded-2xl shadow-md`}
+              style={[styles.card, { backgroundColor:theme.colors.minorcolor }, animatedStyle]}
             >
-              <View className="flex-row justify-between items-center">
-                <Ionicons name={feature.icon} size={28} color="#4A5568" />
-                <View className="flex-row justify-center items-center space-x-1">
-                  <Text className="text-base font-semibold text-gray-800">
-                    10
-                  </Text>
-                  <Feather color="#4A5568" name="chevron-right" size={18} />
+              <View style={styles.iconWrapper}>
+                <Ionicons name={feature.icon} size={28} color={theme.colors.color} />
+                <View style={styles.rightSection}>
+                  <Text style={styles.countText}>10</Text>
+                  <Feather color={theme.colors.color} name="chevron-right" size={18} />
                 </View>
               </View>
-              <Text className="mt-3 text-sm font-medium text-gray-600">
-                {feature.name}
-              </Text>
+              <Text style={styles.featureName}>{feature.name}</Text>
             </Animated.View>
           </TouchableWithoutFeedback>
         );
@@ -73,5 +112,6 @@ const HomeFeatureGrid = ({ features }) => {
     </View>
   );
 };
+
 
 export default HomeFeatureGrid;

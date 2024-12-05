@@ -1,15 +1,44 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { Ionicons } from 'react-native-vector-icons';
+import React, { useContext } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { ThemeContext } from "../theme/ThemeContext";
+const DashBoardQuickOverviewCard = ({ data }) => {
+  const theme = useContext(ThemeContext);
 
-const DashBoardQuickOverviewCard = ({ data }) => (
-  <View className="flex-row bg-white p-4 rounded-lg m-2 flex-1 items-center">
-    <Ionicons name={data.icon} size={30} color={data.iconColor} />
-    <View className="flex-column bg-white rounded-lg items-center ml-4">
-      <Text className="text-sm text-gray-700">{data.label}</Text>
-      <Text className="text-lg font-semibold text-gray-800">KES {data.amount.toLocaleString()}</Text>
+  const styles = StyleSheet.create({
+    card: {
+      flexDirection: "row",
+      backgroundColor: theme.colors.minorcolor,
+
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      padding: 10,
+      borderRadius: 8,
+    },
+    infoContainer: {
+      alignItems: "center",
+      marginLeft: 16,
+    },
+    label: {
+      fontSize: 16,
+      color: theme.colors.color,
+    },
+    amount: {
+      fontSize: 18,
+      fontWeight: "600",
+      color: theme.colors.color,
+    },
+  });
+
+  return (
+    <View style={styles.card}>
+      <Ionicons name={data.icon} size={30} color={data.iconColor} />
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>{data.label}</Text>
+        <Text style={styles.amount}>KES {data.amount.toLocaleString()}</Text>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export default DashBoardQuickOverviewCard;

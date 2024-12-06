@@ -14,43 +14,51 @@ const HomeHeader = () => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: 6,
-      backgroundColor: theme.colors.secondary,
+      padding: 16,
+      backgroundColor: theme.colors.background,
     },
     userContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: theme.colors.secondary,
+      flexDirection: 'column',
+      alignItems: 'start',
+      marginLeft:10,
+      backgroundColor: theme.colors.background,
     },
     userImage: {
-      width: screenWidth * 0.12, 
-      height: screenWidth * 0.12, 
-      borderRadius: (screenWidth * 0.12) / 2, // Make it circular
+      width: screenWidth * 0.18, 
+      height: screenWidth * 0.18, 
+      borderRadius: (screenWidth * 0.18) / 2, 
       marginRight: 12,
       marginLeft: 8,
       resizeMode: 'cover', 
     },
-    userName: {
-      fontSize: 18,
-      fontWeight: '600',
+    welcomeText: {
       color: theme.colors.color,
+      fontSize: 16,
+    },
+    userName: {
+      color: theme.colors.color,
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    priority: {
+      color: "#FFD700", 
+      marginTop: 4,
     },
   });
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.userContainer}>
-        <Image source={randomUser.image} style={styles.userImage} />
+      <Text style={styles.welcomeText}>Welcome back</Text>
         <Text style={styles.userName}>{randomUser.name}</Text>
+        <Text style={styles.priority}>Priority</Text>
       </View>
-      <Ionicons
-        style={{ marginRight: 36 }}
-        name="notifications-outline"
-        size={24}
-        color={theme.colors.color}
-      />
+
+      <Image source={randomUser.image} style={styles.userImage} />
+  
     </View>
   );
 };
 
 export default HomeHeader;
+

@@ -15,6 +15,7 @@ export default function TextInput({ errorText, description, secureTextEntry, ...
     },
     input: {
       backgroundColor: theme.colors.background, // Background color from theme
+    
     },
     description: {
       fontSize: 13,
@@ -33,20 +34,13 @@ export default function TextInput({ errorText, description, secureTextEntry, ...
       <Input
         style={styles.input}
         placeholderTextColor={theme.colors.color} // Placeholder text color
-        selectionColor={theme.colors.primary} // Highlight color for selected text
+        selectionColor={theme.colors.color} // Highlight color for selected text
         underlineColor="transparent" // Removes the underline
         mode="outlined"
+        textColor ={theme.colors.color}
         secureTextEntry={secureText} // Toggles text visibility
         outlineColor={theme.colors.color} // Default outline color
         activeOutlineColor={theme.colors.color} // Focused outline color
-        theme={{
-          colors: {
-            text: theme.colors.color, // Ensure input text color matches theme
-            placeholder: theme.colors.color, // Placeholder color
-            primary: theme.colors.primary, // Active outline and caret color
-            background: theme.colors.background, // Background color
-          },
-        }}
         right={
           secureTextEntry && (
             <Input.Icon

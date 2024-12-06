@@ -216,7 +216,7 @@ export default function RegisterScreen({ navigation }) {
 
       {/* Verification Modal */}
       <ReactNativeModal
-        isVisible={isModalVisible}
+        isVisible={isModalVisible && navigation.isFocused()}
         onBackdropPress={toggleModal}
         animationIn="slideInUp"
         animationOut="slideOutDown"

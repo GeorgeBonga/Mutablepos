@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
 
       {/* Verification Modal */}
       <ReactNativeModal
-        isVisible={isModalVisible}
+        isVisible={isModalVisible  && navigation.isFocused()}
         onBackdropPress={toggleModal}
         animationIn="slideInUp"
         animationOut="slideOutDown"

@@ -5,6 +5,8 @@ import HomeHeader from "../components/HomeHeader";
 import HomeSummaryCard from "../components/HomeSummaryCard";
 import HomeFeatureGrid from "../components/HomeFeatureGrid";
 import { ThemeContext } from "../theme/ThemeContext";
+import HomeActionButtons from "../components/HomeActionButtons";
+import HomeTransaction from "../components/HomeTransaction";
 const Home = () => {
   const theme = useContext(ThemeContext)
   const summaryData = {
@@ -60,8 +62,10 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
       >
         <HomeSummaryCard data={summaryData} />
-        <Text style={styles.featuresTitle}>Our Awesome Features</Text>
-        <HomeFeatureGrid features={features} />
+        <HomeActionButtons/>
+        <HomeTransaction/>
+        {/* <Text style={styles.featuresTitle}>Our Awesome Features</Text>
+        <HomeFeatureGrid features={features} /> */}
       </ScrollView>
     </SafeAreaView>
   );

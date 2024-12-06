@@ -16,7 +16,7 @@ function Header({ title }) {
       paddingHorizontal: 16,
       paddingVertical: 16,
       marginBottom:2,
-      backgroundColor:theme.colors.secondary
+      backgroundColor:theme.colors.background
     },
     title: {
       marginLeft: 40,

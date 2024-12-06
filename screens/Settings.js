@@ -210,7 +210,7 @@ export default function Settings() {
           </View>
         </TouchableOpacity>
       </View>
-      <Text style={styles.footerText}>MutableTechPos V-1.0</Text>
+      <Text style={styles.footerText}>DukaPos V-1.0</Text>
     </SafeAreaView>
   );
 }

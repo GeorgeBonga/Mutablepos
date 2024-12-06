@@ -3,10 +3,6 @@
     "name": "Mutablepos",
     "slug": "Mutablepos",
     "version": "1.0.0",
-    "androidStatusBar": {
-      "backgroundColor": "#2A6DBB",
-      "barStyle": "light-content"
-    },
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
@@ -14,7 +10,7 @@
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2563eb"
     },
     "plugins": [
       [
@@ -32,7 +28,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#2563eb"
       },
       "permissions": [
         "android.permission.CAMERA",

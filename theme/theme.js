@@ -7,7 +7,7 @@ const theme = {
       background: "#ffffff",
       majorcolor: "#373A40",
       primary:"#003087",
-      secondary:"#2A6DBB",
+      secondary:"#2563eb",
 
       error: "#FF5252",
     },
@@ -20,7 +20,7 @@ const theme = {
       background: "#121212",
       majorcolor: "#f7f7fb",
       primary:"#003087",
-      secondary:"#2A6DBB",
+      secondary:"#2563eb",
 
       error: "#FF5252",
     },

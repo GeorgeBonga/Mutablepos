@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper'
+import { ThemeContext } from '../theme/ThemeContext'
+
 
 export default function Paragraph(props) {
-  return <Text style={styles.text} {...props} />
+  const theme = useContext(ThemeContext)
+  return <Text style={[styles.text,{color:theme.colors.color}]} {...props} />
 }
 
 const styles = StyleSheet.create({

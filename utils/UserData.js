@@ -2,14 +2,14 @@ import UserImage from "../assets/nik.png"
 const UserData = [
     {
       id: 1,
-      name: "John Doe",
+      name: "Ken Reagan Lumuli",
       image:UserImage,
       email: "john.doe@example.com",
       password: "password123",
     },
     {
       id: 2,
-      name: "Jane Smith",
+      name: "George Bonga",
       image:UserImage,
       email: "jane.smith@example.com",
       password: "securepassword456",

@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -7,22 +7,25 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { Text } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import ReactNativeModal from "react-native-modal";
+import Feather from "react-native-vector-icons/Feather";
+
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import BodyText from "../components/Onboarding/BodyText";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import BackButton from "../components/BackButton";
+
 import { ThemeContext } from "../theme/ThemeContext";
 import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
-import { SafeAreaView } from "react-native-safe-area-context";
-import ReactNativeModal from "react-native-modal";
-import  Feather  from "react-native-vector-icons/Feather";
 
 export default function RegisterScreen({ navigation }) {
-  const theme =useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
   const [name, setName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
@@ -35,35 +38,34 @@ export default function RegisterScreen({ navigation }) {
   const toggleModal = () => setModalVisible(!isModalVisible);
 
   const onSignUpPressed = () => {
- 
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
+
     if (nameError || emailError || passwordError) {
       setName({ ...name, error: nameError });
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       return;
     }
-    toggleModal(); 
+
+    toggleModal();
   };
 
   const onVerifyPressed = () => {
-    setIsVerifying(true); 
-    setError(""); 
+    setIsVerifying(true);
+    setError("");
 
     setTimeout(() => {
       if (verificationCode === "1234") {
-        setIsVerified(true); 
-        setIsVerifying(false); 
-        console.log("Verification code entered:", verificationCode);
-        setModalVisible(false); 
+        setIsVerified(true);
+        setIsVerifying(false);
+        setModalVisible(false);
       } else {
-        // Failure case
-        setIsVerifying(false); 
-        setError("Invalid code, please try again."); 
+        setIsVerifying(false);
+        setError("Invalid code, please try again.");
       }
-    }, 3000); 
+    }, 3000);
   };
 
   useEffect(() => {
@@ -76,11 +78,18 @@ export default function RegisterScreen({ navigation }) {
     }
   }, [isVerified, navigation]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setIsVerified(false); // Reset isVerified when leaving screen
+      };
+    }, [])
+  );
+
   const styles = StyleSheet.create({
     row: {
       flexDirection: "row",
       marginTop: 4,
-      
     },
     link: {
       fontWeight: "bold",
@@ -141,17 +150,11 @@ export default function RegisterScreen({ navigation }) {
       marginBottom: 20,
     },
   });
-  
-
 
   return (
-    <SafeAreaView
-    
-      style={{ flex:1, backgroundColor: theme.colors.surface }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.surface }}>
       <KeyboardAvoidingView
         behavior={"padding"}
-        contentContainerStyle={styles.container}
         keyboardVerticalOffset={150}
         style={{ flex: 2 }}
       >
@@ -175,8 +178,6 @@ export default function RegisterScreen({ navigation }) {
             error={!!email.error}
             errorText={email.error}
             autoCapitalize="none"
-            autoCompleteType="email"
-            textContentType="emailAddress"
             keyboardType="email-address"
           />
           <TextInput
@@ -195,18 +196,19 @@ export default function RegisterScreen({ navigation }) {
             style={{ marginTop: 24 }}
           />
           <View style={styles.row}>
-            <Text style={{color: theme.colors.color}}>or continue with :</Text>
+            <Text style={{ color: theme.colors.color }}>or continue with :</Text>
           </View>
           <Button
             mode="outlined"
-            image={require("../assets/google.png")} 
+            image={require("../assets/google.png")}
             label="Google"
             imageStyle={{ width: 25, height: 25 }}
             onPress={onSignUpPressed}
           />
-
           <View style={styles.row}>
-            <Text style={{color: theme.colors.color}}>Already have an account? </Text>
+            <Text style={{ color: theme.colors.color }}>
+              Already have an account?{" "}
+            </Text>
             <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
               <Text style={styles.link}>Login</Text>
             </TouchableOpacity>
@@ -247,7 +249,7 @@ export default function RegisterScreen({ navigation }) {
           ) : (
             <Button
               mode="contained"
-              label=" Verify Email"
+              label="Verify Email"
               onPress={onVerifyPressed}
             />
           )}
@@ -256,7 +258,7 @@ export default function RegisterScreen({ navigation }) {
 
       {/* Success Modal */}
       <ReactNativeModal
-        isVisible={isVerified && navigation.isFocused()} 
+        isVisible={isVerified && navigation.isFocused()}
         onBackdropPress={() => setIsVerified(false)}
         animationIn="fadeIn"
         animationOut="fadeOut"
@@ -266,7 +268,6 @@ export default function RegisterScreen({ navigation }) {
             <Feather name="check" size={40} color="white" />
           </View>
           <Text style={styles.successText}>Email Verified Successfully!</Text>
-       
           <View style={styles.loaderContainer}>
             <ActivityIndicator
               animating={true}
@@ -276,9 +277,7 @@ export default function RegisterScreen({ navigation }) {
             <Text style={styles.verifyingText}>Redirecting...</Text>
           </View>
         </View>
-        
       </ReactNativeModal>
     </SafeAreaView>
   );
 }
-

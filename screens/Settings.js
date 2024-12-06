@@ -199,7 +199,7 @@ export default function Settings() {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("LoginScreen")}
+          onPress={() => navigation.navigate("RegisterScreen")}
           style={styles.menuItem}
         >
           <View style={styles.menuItemContent}>

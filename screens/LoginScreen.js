@@ -21,10 +21,8 @@ import ReactNativeModal from "react-native-modal";
 import { Feather } from "@expo/vector-icons";
 import { ThemeContext } from "../theme/ThemeContext";
 
-
-
- function LoginScreen({ navigation }) {
-  const theme = useContext(ThemeContext)
+function LoginScreen({ navigation }) {
+  const theme = useContext(ThemeContext);
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [isModalVisible, setModalVisible] = useState(false);
@@ -71,90 +69,83 @@ import { ThemeContext } from "../theme/ThemeContext";
     }
   }, [isVerified, navigation]);
 
-  
-const styles = StyleSheet.create({
-  forgotPassword: {
-    width: "100%",
-    alignItems: "flex-end",
-    // marginBottom: 20,
-  },
-  row: {
-    flexDirection: "row",
-    marginTop: 4,
-    
-  },
-  forgot: {
-    fontSize: 13,
-    marginTop: 5,
-    color: theme.colors.color,
-  },
-  link: {
-    fontWeight: "bold",
-    color: theme.colors.primary,
-  },
-  modalContainer: {
-    backgroundColor: theme.colors.background,
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
-    elevation: 5,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: theme.colors.color,
-    marginBottom: 5,
-  },
-  modalText: {
-    fontSize: 14,
-    color: "gray",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  input: {
-    width: "100%",
-    marginBottom: 20,
-  },
-  loaderContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  verifyingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: theme.colors.primary,
-  },
-  errorText: {
-    color: theme.colors.error,
-    fontSize: 14,
-    marginTop: 10,
-  },
-  successIcon: {
-    backgroundColor: "green",
-    borderRadius: 50,
-    padding: 15,
-    marginBottom: 20,
-  },
-  successText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "green",
-    marginBottom: 20,
-  },
-});
-
+  const styles = StyleSheet.create({
+    forgotPassword: {
+      width: "100%",
+      alignItems: "flex-end",
+    },
+    row: {
+      flexDirection: "row",
+      marginTop: 4,
+    },
+    forgot: {
+      fontSize: 13,
+      marginTop: 5,
+      color: theme.colors.color,
+    },
+    link: {
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    modalContainer: {
+      backgroundColor: theme.colors.background,
+      padding: 20,
+      borderRadius: 10,
+      alignItems: "center",
+      shadowOpacity: 0.25,
+      shadowRadius: 10,
+      elevation: 5,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.color,
+      marginBottom: 5,
+    },
+    modalText: {
+      fontSize: 14,
+      color: "gray",
+      textAlign: "center",
+      marginBottom: 20,
+    },
+    input: {
+      width: "100%",
+      marginBottom: 20,
+    },
+    loaderContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    verifyingText: {
+      marginTop: 10,
+      fontSize: 16,
+      color: theme.colors.primary,
+    },
+    errorText: {
+      color: theme.colors.error,
+      fontSize: 14,
+      marginTop: 10,
+    },
+    successIcon: {
+      backgroundColor: "green",
+      borderRadius: 50,
+      padding: 15,
+      marginBottom: 20,
+    },
+    successText: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: "green",
+      marginBottom: 20,
+    },
+  });
 
   return (
-    <SafeAreaView
-
-      style={{flex:1, backgroundColor: theme.colors.background }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <KeyboardAvoidingView
-        behavior={"padding"}
+        behavior="padding"
         keyboardVerticalOffset={100}
-        style={{ flex: 2 }}
+        style={{ flex: 1 }}
       >
         <Background>
           <BackButton />
@@ -188,10 +179,11 @@ const styles = StyleSheet.create({
               <Text style={styles.forgot}>Forgot your password?</Text>
             </TouchableOpacity>
           </View>
-
           <Button mode="contained" label="Log in" onPress={onLoginPressed} />
           <View style={styles.row}>
-            <Text style={{color: theme.colors.color}}>or continue with :</Text>
+            <Text style={{ color: theme.colors.color }}>
+              or continue with :
+            </Text>
           </View>
           <Button
             mode="outlined"
@@ -200,9 +192,10 @@ const styles = StyleSheet.create({
             imageStyle={{ width: 25, height: 25 }}
             onPress={onLoginPressed}
           />
-
           <View style={styles.row}>
-            <Text style={{color: theme.colors.color}}>Don’t have an account? </Text>
+            <Text style={{ color: theme.colors.color }}>
+              Don’t have an account?{" "}
+            </Text>
             <TouchableOpacity
               onPress={() => navigation.replace("RegisterScreen")}
             >
@@ -212,9 +205,8 @@ const styles = StyleSheet.create({
         </Background>
       </KeyboardAvoidingView>
 
-      {/* Verification Modal */}
       <ReactNativeModal
-        isVisible={isModalVisible  && navigation.isFocused()}
+        isVisible={isModalVisible}
         onBackdropPress={toggleModal}
         animationIn="slideInUp"
         animationOut="slideOutDown"
@@ -252,9 +244,11 @@ const styles = StyleSheet.create({
         </View>
       </ReactNativeModal>
 
-      {/* Success Modal */}
+    
+
       <ReactNativeModal
         isVisible={isVerified && navigation.isFocused()}
+        onBackdropPress={() => setIsVerified(false)}
         animationIn="fadeIn"
         animationOut="fadeOut"
       >
@@ -277,5 +271,4 @@ const styles = StyleSheet.create({
   );
 }
 
-
-export default LoginScreen
+export default LoginScreen;

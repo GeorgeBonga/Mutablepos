@@ -216,8 +216,8 @@ export default function RegisterScreen({ navigation }) {
         </Background>
       </KeyboardAvoidingView>
 
-      {/* Verification Modal */}
-      <ReactNativeModal
+  
+      {/* <ReactNativeModal
         isVisible={isModalVisible && navigation.isFocused()}
         onBackdropPress={toggleModal}
         animationIn="slideInUp"
@@ -256,7 +256,7 @@ export default function RegisterScreen({ navigation }) {
         </View>
       </ReactNativeModal>
 
-      {/* Success Modal */}
+    
       <ReactNativeModal
         isVisible={isVerified && navigation.isFocused()}
         onBackdropPress={() => setIsVerified(false)}
@@ -277,7 +277,74 @@ export default function RegisterScreen({ navigation }) {
             <Text style={styles.verifyingText}>Redirecting...</Text>
           </View>
         </View>
-      </ReactNativeModal>
+      </ReactNativeModal> */}
+
+<ReactNativeModal
+  isVisible={(isModalVisible || isVerified) && navigation.isFocused()}
+  onBackdropPress={() => {
+    if (isVerified) {
+      setIsVerified(false);
+    } else {
+      toggleModal();
+    }
+  }}
+  animationIn={isVerified ? "fadeIn" : "slideInUp"}
+  animationOut={isVerified ? "fadeOut" : "slideOutDown"}
+>
+  <View style={styles.modalContainer}>
+    {isVerified ? (
+      // Success Modal Content
+      <>
+        <View style={styles.successIcon}>
+          <Feather name="check" size={40} color="white" />
+        </View>
+        <Text style={styles.successText}>Email Verified Successfully!</Text>
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator
+            animating={true}
+            size="large"
+            color={theme.colors.primary}
+          />
+          <Text style={styles.verifyingText}>Redirecting...</Text>
+        </View>
+      </>
+    ) : (
+      // Verification Modal Content
+      <>
+        <Feather name="lock" size={40} color={theme.colors.primary} />
+        <Text style={styles.modalTitle}>Verification</Text>
+        <Text style={styles.modalText}>
+          We have sent a verification code to {email.value}.
+        </Text>
+        <TextInput
+          label="Enter Verification Code"
+          value={verificationCode}
+          onChangeText={setVerificationCode}
+          keyboardType="numeric"
+          style={styles.input}
+        />
+        {error && <Text style={styles.errorText}>{error}</Text>}
+        {isVerifying ? (
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator
+              animating={true}
+              size="large"
+              color={theme.colors.primary}
+            />
+            <Text style={styles.verifyingText}>Verifying...</Text>
+          </View>
+        ) : (
+          <Button
+            mode="contained"
+            label="Verify Email"
+            onPress={onVerifyPressed}
+          />
+        )}
+      </>
+    )}
+  </View>
+</ReactNativeModal>
+
     </SafeAreaView>
   );
 }

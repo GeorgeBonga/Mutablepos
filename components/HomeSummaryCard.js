@@ -51,6 +51,8 @@ const HomeSummaryCard = ({ data }) => {
   );
 };
 
+export default HomeSummaryCard;
+
 const styles = StyleSheet.create({
   cardContainer: {
     padding: 16, 
@@ -99,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeSummaryCard;
+

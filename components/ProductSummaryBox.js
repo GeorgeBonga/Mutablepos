@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { ThemeContext } from '../theme/ThemeContext';
+
 
 export const ProductSummaryBox = ({ title, value, percentage, color }) => {
+  const theme = useContext(ThemeContext)
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.value}>{value}</Text>
-      <View style={[styles.percentageBox, { backgroundColor: color }]}>
-        <Ionicons name="arrow-up" size={14} color="#000000" />
-        <Text style={styles.percentage}>{percentage}</Text>
+    <View style={[styles.container,{backgroundColor: theme.colors.minorcolor }]}>
+      <Text style={[styles.title,{color:theme.colors.color}]}>{title}</Text>
+      <Text style={[styles.value,{color:theme.colors.color}]}>{value}</Text>
+      <View style={[styles.percentageBox, { backgroundColor: theme.colors.background }]}>
+        <Ionicons name="arrow-up" size={14} color={theme.colors.color} />
+        <Text style={[styles.percentage,{color:theme.colors.color}]}>{percentage}</Text>
       </View>
     </View>
   );
 };
+
+export default ProductSummaryBox;
 
 const styles = StyleSheet.create({
   container: {
@@ -21,22 +26,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     borderRadius: 10,
-    backgroundColor: '#ebf8ff',
     marginHorizontal: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
-    elevation: 5,
   },
   title: {
     fontSize: 12,
-    color: '#6b7280',
   },
   value: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#000000',
     marginVertical: 8,
   },
   percentageBox: {
@@ -48,9 +45,8 @@ const styles = StyleSheet.create({
   },
   percentage: {
     fontSize: 12,
-    color: '#000000',
     marginLeft: 4,
   },
 });
 
-export default ProductSummaryBox;
+

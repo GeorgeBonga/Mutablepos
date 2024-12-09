@@ -11,26 +11,12 @@ import { ThemeContext } from "../theme/ThemeContext";
 export default function StartScreen({ navigation }) {
   const theme = useContext(ThemeContext)
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-   
-   
-    },
-    welcomeText: {
-      fontSize: 18,
-      fontWeight: "600",
-      color: theme.colors.color,
-      marginBottom: 16,
-    },
-  });
-  
   return (
     <SafeAreaView style={styles.container}>
       <Background>
         <BackButton goBack={navigation.goBack} />
         <Logo />
-        <BodyText style={styles.welcomeText}>
+        <BodyText style={[styles.welcomeText,{color: theme.colors.color}]}>
           Welcome to Mutable Tech POS
         </BodyText>
         <Paragraph>
@@ -51,3 +37,17 @@ export default function StartScreen({ navigation }) {
   );
 }
 
+
+
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    welcomeText: {
+      fontSize: 18,
+      fontWeight: "600",
+      marginBottom: 16,
+    },
+  });
+  

@@ -8,126 +8,32 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Antdesign from "react-native-vector-icons/AntDesign";
+import Antdesign from "@expo/vector-icons/AntDesign";
 import { EventRegister } from "react-native-event-listeners";
 import HomeHeader from "../components/HomeHeader";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "../theme/ThemeContext";
 
-export default function Settings() {
+const Settings = () => {
   const navigation = useNavigation();
 
   const theme = useContext(ThemeContext);
   const [darkmode, setDarkmode] = useState(false);
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    header: {
-      borderBottomWidth: 1,
-      borderColor: theme.colors.background,
-    },
-    menuItems: {
-      marginTop: 16,
-    },
-    menuItem: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-    },
-    borderBottom: {
-      borderBottomWidth: 1,
-      borderColor: "#E5E7EB",
-    },
-    menuItemContent: {
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    iconWrapper: {
-      width: 32,
-      height: 32,
-      borderRadius: 16,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    darkModeIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    darkModeIconText: {
-      color: theme.colors.color,
-    },
-    subscriptionIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    subscriptionIconText: {
-      color: theme.colors.color,
-    },
-    dashboardIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    dashboardIconText: {
-      color: theme.colors.color,
-    },
-    userRoleIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    userRoleIconText: {
-      color: theme.colors.color,
-    },
-    currencyIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    currencyIconText: {
-      color: theme.colors.color,
-    },
-    barcodeIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    barcodeIconText: {
-      color: theme.colors.color,
-    },
-    languageIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    languageIconText: {
-      color: theme.colors.color,
-    },
-    logoutIcon: {
-      backgroundColor: theme.colors.minorcolor,
-    },
-    menuItemText: {
-      marginLeft: 16,
-      fontSize: 16,
-      color: theme.colors.color,
-    },
-    menuItemSubText: {
-      fontSize: 16,
-      color: theme.colors.color,
-    },
-    footerText: {
-      textAlign: "center",
-      color: theme.colors.color,
-      fontSize: 12,
-      marginVertical: 16,
-    },
-  });
+
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView style={[styles.container,{  backgroundColor: theme.colors.background}]}>
+      <View style={[styles.header,{ borderColor: theme.colors.background}]}>
         <HomeHeader />
       </View>
       <View style={styles.menuItems}>
         <View style={[styles.menuItem, styles.borderBottom]}>
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.darkModeIcon]}>
-              <Text style={styles.darkModeIconText}>🌙</Text>
+            <View style={[styles.iconWrapper, styles.darkModeIcon,{backgroundColor:theme.colors.minorcolor}]}>
+              <Text style={[styles.darkModeIconText,{color: theme.colors.color}]}>🌙</Text>
             </View>
-            <Text style={styles.menuItemText}>Dark Mode</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>Dark Mode</Text>
           </View>
           <View
             style={{
@@ -151,51 +57,51 @@ export default function Settings() {
         </View>
         <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.subscriptionIcon]}>
+            <View style={[styles.iconWrapper, styles.subscriptionIcon,{backgroundColor:theme.colors.minorcolor}]}>
               <Text style={styles.subscriptionIconText}>🎁</Text>
             </View>
-            <Text style={styles.menuItemText}>Subscription</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>Subscription</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.dashboardIcon]}>
+            <View style={[styles.iconWrapper, styles.dashboardIcon,{backgroundColor:theme.colors.minorcolor}]}>
               <Text style={styles.dashboardIconText}>📊</Text>
             </View>
-            <Text style={styles.menuItemText}>Dashboard</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>Dashboard</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.userRoleIcon]}>
+            <View style={[styles.iconWrapper, styles.userRoleIcon,{backgroundColor:theme.colors.minorcolor}]}>
               <Text style={styles.userRoleIconText}>👥</Text>
             </View>
-            <Text style={styles.menuItemText}>User Role</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>User Role</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.currencyIcon]}>
-              <Text style={styles.currencyIconText}>$</Text>
+            <View style={[styles.iconWrapper, styles.currencyIcon,{backgroundColor:theme.colors.minorcolor}]}>
+              <Text style={[styles.currencyIconText,{ color: theme.colors.color}]}>$</Text>
             </View>
-            <Text style={styles.menuItemText}>Currency</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>Currency</Text>
           </View>
-          <Text style={styles.menuItemSubText}>KES</Text>
+          <Text style={[styles.menuItemSubText,{ color: theme.colors.color}]}>KES</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.barcodeIcon]}>
+            <View style={[styles.iconWrapper, styles.barcodeIcon,{backgroundColor:theme.colors.minorcolor}]}>
               <Text style={styles.barcodeIconText}>🏷️</Text>
             </View>
-            <Text style={styles.menuItemText}>Barcode Generator</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>Barcode Generator</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.menuItem, styles.borderBottom]}>
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.languageIcon]}>
+            <View style={[styles.iconWrapper, styles.languageIcon,{backgroundColor:theme.colors.minorcolor}]}>
               <Text style={styles.languageIconText}>🌐</Text>
             </View>
-            <Text style={styles.menuItemText}>Select Your Language</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>Select Your Language</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -203,14 +109,72 @@ export default function Settings() {
           style={styles.menuItem}
         >
           <View style={styles.menuItemContent}>
-            <View style={[styles.iconWrapper, styles.logoutIcon]}>
+            <View style={[styles.iconWrapper, styles.logoutIcon,{backgroundColor:theme.colors.minorcolor}]}>
               <Antdesign name="logout" color={theme.colors.color} size={16} />
             </View>
-            <Text style={styles.menuItemText}>Log Out</Text>
+            <Text style={[styles.menuItemText,{ color: theme.colors.color}]}>Log Out</Text>
           </View>
         </TouchableOpacity>
       </View>
-      <Text style={styles.footerText}>DukaPos V-1.0</Text>
+      <Text style={[styles.footerText,{ color: theme.colors.color}]}>DukaPos V-1.0</Text>
     </SafeAreaView>
   );
 }
+
+export default Settings
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  
+  },
+  header: {
+    borderBottomWidth: 1,
+   
+  },
+  menuItems: {
+    marginTop: 16,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  borderBottom: {
+    borderBottomWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+  menuItemContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconWrapper: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  menuItemText: {
+    marginLeft: 16,
+    fontSize: 16,
+  },
+  menuItemSubText: {
+    fontSize: 16,
+  },
+  footerText: {
+    textAlign: "center",
+    fontSize: 12,
+    marginVertical: 16,
+  },
+});
+
+
+
+
+

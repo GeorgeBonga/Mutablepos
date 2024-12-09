@@ -16,26 +16,7 @@ const Home = () => {
     expense: 1000,
   };
 
-  const styles = StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor:theme.colors.background,
-   
 
-    },
-    scrollView: {
-      flex: 1,
-      backgroundColor:theme.colors.background,
-      padding:10,
-      paddingTop:5
-    },
-    featuresTitle: {
-      fontSize: 20, // Equivalent to `text-2xl`
-      fontWeight: "bold", // Equivalent to `font-bold`
-      color: theme.colors.color, // Equivalent to `text-gray-800`
-      marginBottom: 16, // Equivalent to `mb-4`
-    },
-  });
 
   const features = [
     { id: "1", name: "Sales", icon: "cart-outline" },
@@ -53,18 +34,18 @@ const Home = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea,{  backgroundColor:theme.colors.background}]}>
       
       <HomeHeader />
      
       <ScrollView 
-        style={styles.scrollView} 
+        style={[styles.scrollView,{ backgroundColor:theme.colors.background}]} 
         showsVerticalScrollIndicator={false}
       >
         <HomeSummaryCard data={summaryData} />
         <HomeActionButtons/>
         <HomeTransaction/>
-        {/* <Text style={styles.featuresTitle}>Our Awesome Features</Text>
+        {/* <Text style={[styles.featuresTitle,{ color: theme.colors.color,}]}>Our Awesome Features</Text>
         <HomeFeatureGrid features={features} /> */}
       </ScrollView>
     </SafeAreaView>
@@ -74,3 +55,24 @@ const Home = () => {
 
 
 export default Home;
+
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  
+ 
+
+  },
+  scrollView: {
+    flex: 1,
+   
+    padding:10,
+    paddingTop:5
+  },
+  featuresTitle: {
+    fontSize: 20, 
+    fontWeight: "bold", 
+    marginBottom: 16,
+  },
+});

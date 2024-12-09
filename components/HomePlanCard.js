@@ -15,6 +15,10 @@ const HomePlanCard = () => {
   );
 };
 
+
+export default HomePlanCard;
+
+
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#f3f4f6', 
@@ -38,4 +42,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomePlanCard;

@@ -9,12 +9,12 @@ export default function BodyText(props) {
   const styles = StyleSheet.create({
     header: {
       fontSize: 21,
-      color: theme.colors.color,
+    
       fontWeight: 'bold',
       paddingVertical: 8,
     },
   })
-  return <Text style={styles.header} {...props} />
+  return <Text style={[styles.header,{  color: theme.colors.color}]} {...props} />
 }
 
 

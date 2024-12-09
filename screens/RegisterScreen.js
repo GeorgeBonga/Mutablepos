@@ -5,12 +5,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Text
 } from "react-native";
-import { Text } from "react-native-paper";
+
 import { useFocusEffect } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ReactNativeModal from "react-native-modal";
-import Feather from "react-native-vector-icons/Feather";
+import Feather from "@expo/vector-icons";
 
 import Background from "../components/Background";
 import Logo from "../components/Logo";
@@ -86,78 +87,11 @@ export default function RegisterScreen({ navigation }) {
     }, [])
   );
 
-  const styles = StyleSheet.create({
-    row: {
-      flexDirection: "row",
-      marginTop: 4,
-    },
-    link: {
-      fontWeight: "bold",
-      color: theme.colors.primary,
-    },
-    modalContainer: {
-      backgroundColor: "white",
-      padding: 20,
-      borderRadius: 10,
-      alignItems: "center",
-      justifyContent: "center",
-      shadowColor: "#000",
-      shadowOpacity: 0.25,
-      shadowRadius: 10,
-      elevation: 5,
-    },
-    modalTitle: {
-      fontSize: 18,
-      fontWeight: "bold",
-      color: theme.colors.primary,
-      marginTop: 10,
-      marginBottom: 5,
-    },
-    modalText: {
-      fontSize: 14,
-      color: "gray",
-      textAlign: "center",
-      marginBottom: 20,
-    },
-    input: {
-      width: "100%",
-      marginBottom: 20,
-    },
-    loaderContainer: {
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    verifyingText: {
-      marginTop: 10,
-      fontSize: 16,
-      color: theme.colors.primary,
-    },
-    errorText: {
-      color: theme.colors.error,
-      fontSize: 14,
-      marginTop: 10,
-    },
-    successIcon: {
-      backgroundColor: "green",
-      borderRadius: 50,
-      padding: 15,
-      marginBottom: 20,
-    },
-    successText: {
-      fontSize: 16,
-      fontWeight: "bold",
-      color: "green",
-      marginBottom: 20,
-    },
-  });
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.surface }}>
-      <KeyboardAvoidingView
-        behavior={"padding"}
-        keyboardVerticalOffset={150}
-        style={{ flex: 2 }}
-      >
+     
         <Background>
           <BackButton />
           <Logo />
@@ -210,22 +144,22 @@ export default function RegisterScreen({ navigation }) {
               Already have an account?{" "}
             </Text>
             <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
-              <Text style={styles.link}>Login</Text>
+              <Text style={[styles.link,{  color: theme.colors.primary}]}>Login</Text>
             </TouchableOpacity>
           </View>
         </Background>
-      </KeyboardAvoidingView>
+
 
   
-      {/* <ReactNativeModal
+      <ReactNativeModal
         isVisible={isModalVisible && navigation.isFocused()}
         onBackdropPress={toggleModal}
         animationIn="slideInUp"
         animationOut="slideOutDown"
       >
-        <View style={styles.modalContainer}>
+        <View style={[styles.modalContainer,{backgroundColor:theme.colors.background}]}>
           <Feather name="lock" size={40} color={theme.colors.primary} />
-          <Text style={styles.modalTitle}>Verification</Text>
+          <Text style={[styles.modalTitle,{color:theme.colors.color}]}>Verification</Text>
           <Text style={styles.modalText}>
             We have sent a verification code to {email.value}.
           </Text>
@@ -234,7 +168,7 @@ export default function RegisterScreen({ navigation }) {
             value={verificationCode}
             onChangeText={setVerificationCode}
             keyboardType="numeric"
-            style={styles.input}
+            style={[styles.input,{backgroundColor: theme.colors.background}]}
           />
           {error && <Text style={styles.errorText}>{error}</Text>}
           {isVerifying ? (
@@ -244,7 +178,7 @@ export default function RegisterScreen({ navigation }) {
                 size="large"
                 color={theme.colors.primary}
               />
-              <Text style={styles.verifyingText}>Verifying...</Text>
+              <Text style={[styles.verifyingText,{color:theme.colors.primary}]}>Verifying...</Text>
             </View>
           ) : (
             <Button
@@ -274,77 +208,81 @@ export default function RegisterScreen({ navigation }) {
               size="large"
               color={theme.colors.primary}
             />
-            <Text style={styles.verifyingText}>Redirecting...</Text>
+            <Text style={[styles.verifyingTextt,{color:theme.colors.primary}]}>Redirecting...</Text>
           </View>
         </View>
-      </ReactNativeModal> */}
+      </ReactNativeModal>
 
-<ReactNativeModal
-  isVisible={(isModalVisible || isVerified) && navigation.isFocused()}
-  onBackdropPress={() => {
-    if (isVerified) {
-      setIsVerified(false);
-    } else {
-      toggleModal();
-    }
-  }}
-  animationIn={isVerified ? "fadeIn" : "slideInUp"}
-  animationOut={isVerified ? "fadeOut" : "slideOutDown"}
->
-  <View style={styles.modalContainer}>
-    {isVerified ? (
-      // Success Modal Content
-      <>
-        <View style={styles.successIcon}>
-          <Feather name="check" size={40} color="white" />
-        </View>
-        <Text style={styles.successText}>Email Verified Successfully!</Text>
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator
-            animating={true}
-            size="large"
-            color={theme.colors.primary}
-          />
-          <Text style={styles.verifyingText}>Redirecting...</Text>
-        </View>
-      </>
-    ) : (
-      // Verification Modal Content
-      <>
-        <Feather name="lock" size={40} color={theme.colors.primary} />
-        <Text style={styles.modalTitle}>Verification</Text>
-        <Text style={styles.modalText}>
-          We have sent a verification code to {email.value}.
-        </Text>
-        <TextInput
-          label="Enter Verification Code"
-          value={verificationCode}
-          onChangeText={setVerificationCode}
-          keyboardType="numeric"
-          style={styles.input}
-        />
-        {error && <Text style={styles.errorText}>{error}</Text>}
-        {isVerifying ? (
-          <View style={styles.loaderContainer}>
-            <ActivityIndicator
-              animating={true}
-              size="large"
-              color={theme.colors.primary}
-            />
-            <Text style={styles.verifyingText}>Verifying...</Text>
-          </View>
-        ) : (
-          <Button
-            mode="contained"
-            label="Verify Email"
-            onPress={onVerifyPressed}
-          />
-        )}
-      </>
-    )}
-  </View>
-</ReactNativeModal>
+
 
     </SafeAreaView>
   );
 }
+
+
+
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    marginTop: 4,
+  },
+  link: {
+    fontWeight: "bold",
+  
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  modalText: {
+    fontSize: 14,
+    color: "gray",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    marginBottom: 20,
+  },
+  loaderContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  verifyingText: {
+    marginTop: 10,
+    fontSize: 16,
+
+  },
+  errorText: {
+ 
+    fontSize: 14,
+    marginTop: 10,
+  },
+  successIcon: {
+    backgroundColor: "green",
+    borderRadius: 50,
+    padding: 15,
+    marginBottom: 20,
+  },
+  successText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "green",
+    marginBottom: 20,
+  },
+});

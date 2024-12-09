@@ -4,7 +4,7 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { ThemeContext } from "../theme/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
 
-// JSON data for action buttons
+
 const actionButtonsData = [
   { id: 1, icon: "arrow-up-circle-outline", label: "Transfer", iconType: Ionicons, navigateTo: "SalesReport" },
   { id: 2, icon: "arrow-down-circle-outline", label: "Request", iconType: Ionicons, navigateTo: "ExpenseReport" },
@@ -13,7 +13,7 @@ const actionButtonsData = [
   { id: 5, icon: "more-horiz", label: "More", iconType: MaterialIcons, navigateTo: "SalesReport" },
 ];
 
-// Reusable button component
+
 const ActionButton = ({ icon, label, IconComponent, navigateTo }) => {
   const theme = useContext(ThemeContext);
   const navigation = useNavigation();
@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconContainer: {
-    width: 50, // Rectangle size
+    width: 50,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 12, // Rounded corners
+    borderRadius: 12, 
   },
   actionText: {
     fontSize: 12,

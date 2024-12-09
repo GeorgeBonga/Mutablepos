@@ -13,9 +13,8 @@ import {
 } from "react-native";
 import { CameraView, Camera } from "expo-camera";
 import { Canvas, DiffRect, rrect, rect } from "@shopify/react-native-skia";
-import Icon from "react-native-vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/Ionicons";
 import { Animated } from "react-native";
-
 // Get window dimensions
 const { width, height } = Dimensions.get("window");
 
@@ -100,12 +99,12 @@ export default function ScanProduct() {
     <SafeAreaView style={StyleSheet.absoluteFillObject}>
       {/* {Platform.OS === "android" && <StatusBar hidden />} */}
 
-      {/* Header Text */}
+    
       <View style={styles.header}>
         <Text style={styles.title}>Scan Products</Text>
       </View>
 
-      {/* Camera View */}
+  
       <CameraView
         style={StyleSheet.absoluteFillObject}
         onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
@@ -124,7 +123,7 @@ export default function ScanProduct() {
         }}
       />
 
-      {/* Overlay Canvas */}
+    
       <Canvas
         style={
           Platform.OS === "android"
@@ -135,9 +134,7 @@ export default function ScanProduct() {
         <DiffRect inner={inner} outer={outer} color="black" opacity={0.5} />
       </Canvas>
 
-      {/* Reload Icon Button */}
-
-      {/* Button to scan again with rounded borders */}
+     
       {scanned && (
         <View style={styles.reloadButton}>
           <Animated.View style={{ transform: [{ rotate: spin }] }}>
@@ -177,8 +174,8 @@ const styles = StyleSheet.create({
   reloadButton: {
     position: "absolute",
     bottom: 50,
-    left: width / 2 - 25, // Center the reload button
-    zIndex: 1, // Ensure the button is on top
+    left: width / 2 - 25,
+    zIndex: 1, 
     padding: 10,
   },
   scanAgainButton: {
@@ -188,8 +185,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     position: "absolute",
     bottom: 20,
-    left: width / 2 - 100, // Center the button
-    zIndex: 1, // Ensure the button is on top
+    left: width / 2 - 100,
+    zIndex: 1, 
   },
   scanAgainText: {
     color: "white",
@@ -197,3 +194,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+
+

@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import React, { useContext } from 'react';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
+import {Pressable, StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -19,27 +19,7 @@ export function Button({ dataLength, flatListIndex, flatListRef })
   const theme = useContext(ThemeContext)
 
 
-  
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: theme.colors.primary,
-    padding: 10,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  arrow: {
-    position: 'absolute',
-   
-  },
-  text: {
-    position: 'absolute',
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: "#FFFFFF",
-  },
-});
+
 
   const buttonAnimationStyle = useAnimatedStyle(() => {
     const isLastScreen = flatListIndex.value === dataLength - 1;
@@ -86,7 +66,7 @@ const styles = StyleSheet.create({
   return (
     <AnimatedPressable
       onPress={handleNextScreen}
-      style={[styles.container, buttonAnimationStyle]}
+      style={[styles.container, buttonAnimationStyle,{ backgroundColor: theme.colors.primary}]}
     >
       <Animated.Text style={[styles.text, textAnimationStyle]}>
         Get Started
@@ -102,3 +82,26 @@ const styles = StyleSheet.create({
     </AnimatedPressable>
   );
 }
+
+
+  
+const styles = StyleSheet.create({
+  container: {
+   
+    padding: 10,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  arrow: {
+    position: 'absolute',
+   
+  },
+  text: {
+    position: 'absolute',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: "#FFFFFF",
+  },
+});

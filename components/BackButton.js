@@ -8,6 +8,18 @@ export default function BackButton({  }) {
   const theme = useContext(ThemeContext)
 
 
+
+  return (
+    <TouchableOpacity onPress={()=> navigation.goBack()} style={[styles.container,{ backgroundColor:theme.colors.primary}]}>
+      <Image
+        style={styles.image}
+        source={require('../assets/arrow_back.png')}
+      />
+    </TouchableOpacity>
+  )
+}
+
+
   
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +27,6 @@ const styles = StyleSheet.create({
     top: 20 ,
     left: 8,
     padding:10,
-    backgroundColor:theme.colors.primary,
     borderRadius:50,
   },
   image: {
@@ -25,13 +36,3 @@ const styles = StyleSheet.create({
    
   },
 })
-
-  return (
-    <TouchableOpacity onPress={()=> navigation.goBack()} style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require('../assets/arrow_back.png')}
-      />
-    </TouchableOpacity>
-  )
-}

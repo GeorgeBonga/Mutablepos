@@ -8,33 +8,36 @@ function Header({ title }) {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext)
 
-  const styles = StyleSheet.create({
-    container: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingVertical: 16,
-      marginBottom:2,
-      backgroundColor:theme.colors.background
-    },
-    title: {
-      marginLeft: 40,
-      fontSize: 20,
-      fontWeight: 'bold',
-      color:theme.colors.color
-    }
-  });
-  
+
   return(
-    <View style={styles.container}>
+    <View style={[styles.container,{ backgroundColor:theme.colors.background}]}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color={theme.colors.color} />
       </TouchableOpacity>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title,{ color:theme.colors.color}]}>{title}</Text>
     </View>
   );
 };
 
 
 export default Header;
+
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    marginBottom:2,
+   
+  },
+  title: {
+    marginLeft: 40,
+    fontSize: 20,
+    fontWeight: 'bold',
+   
+  }
+});
+

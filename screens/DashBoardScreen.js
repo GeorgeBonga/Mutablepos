@@ -14,42 +14,12 @@ const DashBoardScreen = () => {
     const theme = useContext(ThemeContext)
 
 
-    const styles = StyleSheet.create({
-      safeArea: {
-        flex: 1,
-        backgroundColor:theme.colors.background,
-      },
-      scrollView: {
-        flex: 1,
-        backgroundColor:theme.colors.background,
-      },
-      sectionContainer: {
-        paddingHorizontal: 6, 
-        paddingVertical: 8, 
-      },
-      sectionTitle: {
-        fontSize: 18, 
-        fontWeight: "600", 
-        color: theme.colors.color, 
-        marginBottom: 8, 
-      },
-      flexRowWrap: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-      },
-      halfWidth: {
-        width: "46%", 
-        margin:4,
-       
-      },
-    });
-    
+
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea,{ backgroundColor:theme.colors.background}]}>
     <Header title="Dashboard" />
-    <ScrollView style={styles.scrollView}>
+    <ScrollView style={[styles.scrollView,{ backgroundColor:theme.colors.background}]}>
       <DashboardSummaryCard />
 
       <View style={styles.sectionContainer}>
@@ -61,7 +31,7 @@ const DashBoardScreen = () => {
       </View>
 
       <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Quick Overview</Text>
+        <Text style={[styles.sectionTitle,{   color: theme.colors.color}]}>Quick Overview</Text>
         <View style={[styles.flexRowWrap]}>
           {randomUser.quickOverview.map((item) => (
             <View key={`quick-${item.id}`} style={styles.halfWidth}>
@@ -72,7 +42,7 @@ const DashBoardScreen = () => {
       </View>
 
       <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Loss/Profit</Text>
+        <Text style={[styles.sectionTitle,{color:theme.colors.color}]}>Loss/Profit</Text>
         <View style={styles.flexRowWrap}>
           {randomUser.lossProfit.map((item) => (
             <DashBoardLossProfitCard key={`loss-profit-${item.id}`} data={item} />
@@ -86,3 +56,34 @@ const DashBoardScreen = () => {
 
 
 export default DashBoardScreen;
+
+
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,  
+  },
+  scrollView: {
+    flex: 1,
+  },
+  sectionContainer: {
+    paddingHorizontal: 6, 
+    paddingVertical: 8, 
+  },
+  sectionTitle: {
+    fontSize: 18, 
+    fontWeight: "600", 
+ 
+    marginBottom: 8, 
+  },
+  flexRowWrap: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  halfWidth: {
+    width: "46%", 
+    margin:4,
+   
+  },
+});

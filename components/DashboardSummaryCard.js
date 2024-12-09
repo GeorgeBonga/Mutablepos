@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
-import { View, Text, Dimensions, TouchableWithoutFeedback, StyleSheet } from "react-native";
+import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
 import { CartesianChart, BarGroup } from "victory-native";
 import { ThemeContext } from "../theme/ThemeContext";
-const { width } = Dimensions.get("window");
 
 const DATA = [
   { x: "Monday", y: 12000, z: 8000 },
@@ -17,18 +16,89 @@ const DATA = [
 const labels = DATA.map((item) => item.x);
 
 const DashboardSummaryCard = () => {
-  const [selectedDay, setSelectedDay] = useState(DATA[0]); 
-  const theme = useContext(ThemeContext)
+  const [selectedDay, setSelectedDay] = useState(DATA[0]);
+  const theme = useContext(ThemeContext);
 
   const handleBarPress = (index) => {
     const selectedItem = DATA[index];
     setSelectedDay(selectedItem);
   };
 
-  
+  return (
+    <View style={[styles.card, { backgroundColor: theme.colors.minorcolor }]}>
+      <Text style={[styles.title, { color: theme.colors.color }]}>
+        Weekly Overview
+      </Text>
+      <Text style={[styles.day, { color: theme.colors.color }]}>
+        {selectedDay.x}
+      </Text>
+
+      <View style={styles.legendContainer}>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendIcon, { backgroundColor: "#34D399" }]} />
+          <Text style={[styles.legendText, { color: theme.colors.color }]}>
+            Sales: KES {selectedDay.y}
+          </Text>
+        </View>
+
+        <View style={styles.legendItem}>
+          <View style={[styles.legendIcon, { backgroundColor: "#EF4444" }]} />
+          <Text style={{ color: theme.colors.color }}>
+            Purchase: KES {selectedDay.z}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.chartContainer}>
+        <CartesianChart
+          data={DATA}
+          xKey="x"
+          yKeys={["y", "z"]}
+          domainPadding={{ left: 35, right: 20 }}
+        >
+          {({ points, chartBounds }) => (
+            <BarGroup
+              chartBounds={chartBounds}
+              betweenGroupPadding={0.4}
+              withinGroupPadding={0.1}
+              roundedCorners={{ topLeft: 10, topRight: 10 }}
+            >
+              <BarGroup.Bar points={points.y} color="#34D399" />
+              <BarGroup.Bar points={points.z} color="#EF4444" />
+            </BarGroup>
+          )}
+        </CartesianChart>
+
+        <View style={styles.touchableOverlay}>
+          {DATA.map((item, index) => (
+            <TouchableWithoutFeedback
+              key={index}
+              onPress={() => handleBarPress(index)}
+            >
+              <View style={styles.touchableBar} />
+            </TouchableWithoutFeedback>
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.axisLabels}>
+        {labels.map((label, index) => (
+          <Text
+            key={index}
+            style={[styles.axisLabelText, { color: theme.colors.color }]}
+          >
+            {label.substring(0, 3)}
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+export default DashboardSummaryCard;
+
 const styles = StyleSheet.create({
   card: {
-    backgroundColor:theme.colors.minorcolor,
     padding: 16,
     borderRadius: 8,
     shadowOpacity: 0.1,
@@ -39,13 +109,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: theme.colors.color,
+
     marginBottom: 8,
   },
   day: {
     fontSize: 16,
     fontWeight: "bold",
-    color: theme.colors.color,
   },
   legendContainer: {
     flexDirection: "row",
@@ -62,9 +131,6 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     marginRight: 4,
-  },
-  legendText: {
-    color: theme.colors.color,
   },
   chartContainer: {
     height: 200,
@@ -87,72 +153,7 @@ const styles = StyleSheet.create({
   },
   axisLabelText: {
     textAlign: "center",
-    color: theme.colors.color,
-    width: `${100 / labels.length}%`, // Dynamically adjust width
+    width: `${100 / labels.length}%`,
     fontSize: 12,
   },
 });
-
-
-  return (
-    <View style={styles.card}>
-      <Text style={styles.title}>Weekly Overview</Text>
-      <Text style={styles.day}>{selectedDay.x}</Text>
-      
-      {/* Legend with Embedded Data */}
-      <View style={styles.legendContainer}>
-        <View style={styles.legendItem}>
-          <View style={[styles.legendIcon, { backgroundColor: "#34D399" }]} />
-          <Text style={styles.legendText}>Sales: KES {selectedDay.y}</Text>
-        </View>
-
-        <View style={styles.legendItem}>
-          <View style={[styles.legendIcon, { backgroundColor: "#EF4444" }]} />
-          <Text style={styles.legendText}>Purchase: KES {selectedDay.z}</Text>
-        </View>
-      </View>
-
-      <View style={styles.chartContainer}>
-        {/* Bar Chart */}
-        <CartesianChart
-          data={DATA}
-          xKey="x"
-          yKeys={["y", "z"]}
-          domainPadding={{ left: 35, right: 20 }}
-        >
-          {({ points, chartBounds }) => (
-            <BarGroup
-              chartBounds={chartBounds}
-              betweenGroupPadding={0.4}
-              withinGroupPadding={0.1}
-              roundedCorners={{ topLeft: 10, topRight: 10 }}
-            >
-              <BarGroup.Bar points={points.y} color="#34D399" />
-              <BarGroup.Bar points={points.z} color="#EF4444" />
-            </BarGroup>
-          )}
-        </CartesianChart>
-
-        {/* Overlay with Touchable for Bar Click */}
-        <View style={styles.touchableOverlay}>
-          {DATA.map((item, index) => (
-            <TouchableWithoutFeedback key={index} onPress={() => handleBarPress(index)}>
-              <View style={styles.touchableBar} />
-            </TouchableWithoutFeedback>
-          ))}
-        </View>
-      </View>
-
-      {/* X-axis Labels */}
-      <View style={styles.axisLabels}>
-        {labels.map((label, index) => (
-          <Text key={index} style={styles.axisLabelText}>
-            {label.substring(0, 3)} {/* Display only the first 3 letters */}
-          </Text>
-        ))}
-      </View>
-    </View>
-  );
-};
-
-export default DashboardSummaryCard;

@@ -11,11 +11,10 @@ import StartScreen from "../screens/StartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import ResetPasswordScreen from "../screens/ResetPasswordScreen";
-import Settings from "../screens/Settings";
-import SalesHistory from "../screens/SalesHistory";
 import SalesReport from "../screens/SalesReport ";
 import ScanProducts from "../screens/ScanProducts";
 import ExpenseReport from "../screens/ExpenseReport";
+import Settings from "../screens/Settings";
 import Products from "../screens/Products";
 import Home from "../screens/Home";
 import DashBoardScreen from "../screens/DashBoardScreen";
@@ -91,6 +90,7 @@ function MainTabNavigator() {
       />
       <Tab.Screen name="Reports"   component={Reports} />
       <Tab.Screen name="Settings"    component={Settings} />
+
     </Tab.Navigator>
   );
 }
@@ -115,7 +115,7 @@ export default function AppNavigator() {
     <ThemeContext.Provider value={darkmode === true ? theme.dark : theme.light}>
       <NavigationContainer value={darkmode === true ? theme.dark : theme.light}>
         <Stack.Navigator
-          initialRouteName="OnBoardingScreen"
+          initialRouteName="MainTabNavigator"
           screenOptions={{
             headerShown: false,
           }}

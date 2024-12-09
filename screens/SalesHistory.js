@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons"; // Replacing react-native-vector-icons
 import SalesProductList from "../components/SalesProductList";
 import { ProductSummaryBox } from "../components/ProductSummaryBox";
-
+import { ThemeContext } from "../theme/ThemeContext";
 const productData = [
   {
     id: "1",
@@ -80,10 +80,12 @@ const productData = [
 ];
 
 const SalesHistory = () => {
+
+  const theme = useContext(ThemeContext)
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Sales</Text>
+    <View style={[styles.container,{backgroundColor:theme.colors.background}]}>
+      <View style={[styles.header,{backgroundColor:theme.colors.background}]}>
+        <Text style={[styles.headerTitle,{color:theme.colors.color}]}>Sales</Text>
       </View>
 
       <View style={styles.summaryBoxContainer}>
@@ -91,19 +93,19 @@ const SalesHistory = () => {
           title="Products Sold"
           value="12008"
           percentage="+8.00%"
-          color="#E6F4EA" // Green background
+          color={theme.colors.primary}
         />
         <ProductSummaryBox
           title="Amount"
           value="KES2,350"
           percentage="+2.34%"
-          color="#E0F2FE" // Blue background
+          color={theme.colors.primary}
         />
       </View>
 
-      <View style={styles.subHeader}>
-        <Text style={styles.subHeaderTitle}>Sales</Text>
-        <FontAwesome5 name="sliders-h" size={24} color="black" />
+      <View style={[styles.subHeader,{backgroundColor:theme.colors.background}]}>
+        <Text style={[styles.subHeaderTitle,{color:theme.colors.color}]}>Sales</Text>
+        <FontAwesome5 name="sliders-h" size={24} color={theme.colors.color} />
       </View>
 
       <SalesProductList products={productData} />
@@ -111,11 +113,12 @@ const SalesHistory = () => {
   );
 };
 
+export default SalesHistory;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#FFFFFF",
   },
   header: {
     marginBottom: 24,
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#333333",
+ 
   },
   summaryBoxContainer: {
     flexDirection: "row",
@@ -140,8 +143,8 @@ const styles = StyleSheet.create({
   subHeaderTitle: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#333333",
+ 
   },
 });
 
-export default SalesHistory;
+

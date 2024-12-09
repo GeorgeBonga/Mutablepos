@@ -12,36 +12,9 @@ const ReportsCard = ({ features }) => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext)
 
-  const styles = StyleSheet.create({
-    container: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "space-between",
-      backgroundColor:theme.colors.backgound
-    },
-    card: {
-      width: 96,
-      height: 96,
-      borderRadius: 8,
-      alignItems: "center",
-      justifyContent: "center",
-      marginBottom: 24,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.5,
-    
-    },
-    featureName: {
-      marginTop: 8,
-      fontSize: 12,
-      fontWeight: "500",
-      color: theme.colors.color,
-    },
-  });
-  
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{  backgroundColor:theme.colors.backgound}]}>
       {features.map((feature) => {
         const scale = useSharedValue(1);
 
@@ -80,7 +53,7 @@ const ReportsCard = ({ features }) => {
               style={[styles.card, { backgroundColor: theme.colors.minorcolor}, animatedStyle]}
             >
               <Ionicons name={feature.icon} size={30} color={theme.colors.color} />
-              <Text style={styles.featureName}>{feature.name}</Text>
+              <Text style={[styles.featureName,{ color: theme.colors.color}]}>{feature.name}</Text>
             </Animated.View>
           </TouchableWithoutFeedback>
         );
@@ -91,3 +64,34 @@ const ReportsCard = ({ features }) => {
 
 
 export default ReportsCard;
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  
+  },
+  card: {
+    width: 96,
+    height: 96,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 24,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+  
+  },
+  featureName: {
+    marginTop: 8,
+    fontSize: 12,
+    fontWeight: "500",
+   
+  },
+});
+
+

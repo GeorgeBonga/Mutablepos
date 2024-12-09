@@ -10,17 +10,7 @@ const Reports = () => {
   const theme = useContext(ThemeContext)
 
 
-  const styles = StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background, 
-    },
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.background, 
-      padding: 16, 
-    },
-  });
+
   const features = [
     { id: "1", name: "Sales", icon: "cart-outline", color: "bg-blue-100" },
     {
@@ -67,9 +57,9 @@ const Reports = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea,{ backgroundColor: theme.colors.background, }]}>
        <Header title="Reports" />
-      <View style={styles.container}>
+      <View style={[styles.container,{ backgroundColor: theme.colors.background, }]}>
        
         <ReportsCard features={features} />
       </View>
@@ -79,3 +69,15 @@ const Reports = () => {
 
 
 export default Reports;
+
+
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, 
+  },
+  container: {
+    flex: 1,
+    padding: 16, 
+  },
+});

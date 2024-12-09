@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import ProductItem from './ProductItem';
+import { ThemeContext } from '../theme/ThemeContext';
 
 export const ProductList = ({ products }) => {
+  const theme = useContext(ThemeContext)
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.colors.background}]}>
       {products.length > 0 ? (
         <FlatList
           data={products}
@@ -19,6 +21,8 @@ export const ProductList = ({ products }) => {
     </View>
   );
 };
+
+export default ProductList;
 
 const styles = StyleSheet.create({
   container: {
@@ -36,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductList;
+
